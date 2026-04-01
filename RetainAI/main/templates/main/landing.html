@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Retain AI | The Intelligent Host</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Noto+Serif:wght@400;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#C5A059", // Champagne Gold
+                        "on-primary": "#0A0A0A",
+                        "secondary": "#0A0A0A", // Deep Black
+                        "on-secondary": "#C5A059",
+                        "surface": "#0A0A0A", // Solid Black Surface
+                        "on-surface": "#FDFCFB",
+                        "surface-container": "#141414",
+                        "surface-container-high": "#1F1F1F",
+                        "outline": "#333333",
+                        "outline-variant": "rgba(197, 160, 89, 0.2)",
+                    },
+                    fontFamily: {
+                        "headline": ["Noto Serif", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0rem", // Even sharper for ultimate luxury
+                        "lg": "0rem",
+                        "xl": "0rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        .luxury-gradient {
+            background: linear-gradient(135deg, #1A1D21 0%, #000000 100%);
+        }
+        .gold-border {
+            border-color: #C5A059;
+        }
+        .hairline-border {
+            border: 0.5px solid rgba(197, 160, 89, 0.3);
+        }
+        .soft-elevation {
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+        }
+        .gold-text-glow {
+            text-shadow: 0 0 20px rgba(197, 160, 89, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface selection:bg-primary selection:text-secondary">
+<!-- TopNavBar -->
+<nav class="flex justify-between items-center w-full px-8 h-20 md:h-24 sticky top-0 z-50 bg-secondary/90 border-b-[0.5px] border-outline/50 backdrop-blur-xl">
+<div class="text-2xl font-serif font-semibold tracking-tighter text-primary">Retain AI</div>
+<div class="hidden md:flex items-center gap-12">
+<a class="font-sans text-[0.7rem] uppercase tracking-[0.25em] text-on-surface/60 hover:text-primary transition-colors duration-500" href="#">Features</a>
+<a class="font-sans text-[0.7rem] uppercase tracking-[0.25em] text-on-surface/60 hover:text-primary transition-colors duration-500" href="#">Solutions</a>
+<a class="font-sans text-[0.7rem] uppercase tracking-[0.25em] text-on-surface/60 hover:text-primary transition-colors duration-500" href="#">Pricing</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary text-secondary px-8 py-3 text-[0.7rem] uppercase tracking-[0.2em] font-bold hover:bg-white transition-all duration-500">
+                Book a Demo
+            </button>
+</div>
+</nav>
+<main>
+<!-- Hero Section -->
+<section class="relative pt-32 pb-48 overflow-hidden bg-secondary">
+<div class="max-w-7xl mx-auto px-8 grid lg:grid-cols-2 gap-20 items-center">
+<div class="z-10">
+<div class="inline-flex items-center gap-4 mb-10">
+<div class="w-12 h-[1px] bg-primary"></div>
+<span class="font-sans text-[0.7rem] uppercase tracking-[0.3em] text-primary font-bold">Lumière Intelligence</span>
+</div>
+<h1 class="font-headline text-6xl md:text-8xl font-extrabold text-white leading-[1] mb-10 tracking-tighter">
+                        Cultivating <br/>
+<span class="italic font-normal text-primary gold-text-glow">Lasting Loyalty</span>
+</h1>
+<p class="text-xl text-on-surface/50 font-light leading-relaxed mb-16 max-w-lg border-l border-primary/20 pl-10">
+                        Retain AI interprets the nuances of guest behavior to re-engage past visitors with bespoke experiences. Transition from transaction to relationship.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-8">
+<button class="bg-primary text-secondary px-12 py-6 text-[0.7rem] uppercase tracking-[0.3em] font-bold hover:bg-white transition-all duration-500">
+                            Request Invitation
+                        </button>
+<button class="border border-outline px-12 py-6 text-[0.7rem] uppercase tracking-[0.3em] font-bold text-on-surface/80 hover:border-primary hover:text-primary transition-all duration-500">
+                            The Portfolio
+                        </button>
+</div>
+</div>
+<div class="relative">
+<div class="relative overflow-hidden hairline-border bg-secondary p-1">
+<img alt="Platform Dashboard" class="w-full h-auto grayscale brightness-75 hover:grayscale-0 hover:brightness-100 transition-all duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJdzWSbhFFup98hXow3ypG_dceXqD0R8G2dq4SXs5K8XERoCOreGG5uxWqyqhyZEZF2hop9eLM9FdsXsFlPHa2JuQ2CtimQnU9R0wJO4VJtxjD2zvEvy_qbQMABm_7vArZIOpOk7I-gX_eq-up50f8L74zPtD5vw-hzeyOJTKJpOsrGgmG3C6drsad6nbiue1uSHw0vnGWUQEMPSgWw8WeJhWMiY43fyGPYReY_v-0jxF68ULFyT5B9W8EPaUSHc7yyJnXET3PZoc"/>
+</div>
+<!-- Floating Editorial Insight -->
+<div class="absolute -bottom-12 -left-12 bg-secondary border border-primary/30 p-10 soft-elevation max-w-xs z-20">
+<span class="material-symbols-outlined text-primary mb-6">auto_awesome</span>
+<p class="font-headline text-base italic text-on-surface mb-6 leading-relaxed">"Predictive curation suggests a wellness-focused re-engagement for the Q4 luxury segment."</p>
+<div class="h-[1px] w-full bg-primary/10 mb-6"></div>
+<div class="text-[0.6rem] uppercase tracking-[0.3em] text-primary font-bold">Strategy 042 Active</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Trusted By -->
+<section class="py-24 bg-surface border-y border-outline/30">
+<div class="max-w-7xl mx-auto px-8">
+<p class="text-center text-[0.65rem] font-bold tracking-[0.4em] uppercase text-on-surface/40 mb-16">Partners in Excellence</p>
+<div class="flex flex-wrap justify-center items-center gap-16 md:gap-28 opacity-30 hover:opacity-100 transition-opacity duration-1000">
+<span class="font-headline text-2xl font-bold tracking-tight text-white">Azure Resorts</span>
+<span class="font-headline text-2xl font-bold tracking-tight text-white">Vanguard Suites</span>
+<span class="font-headline text-2xl font-bold tracking-tight text-white">Ethos Hotels</span>
+<span class="font-headline text-2xl font-bold tracking-tight text-white">Majestic Palms</span>
+<span class="font-headline text-2xl font-bold tracking-tight text-white">Nordic Stay</span>
+</div>
+</div>
+</section>
+<!-- How it Works -->
+<section class="py-40 bg-surface-container">
+<div class="max-w-7xl mx-auto px-8">
+<div class="max-w-2xl mb-32">
+<h2 class="font-headline text-5xl font-extrabold mb-8 tracking-tight text-white">The Engine of Retention</h2>
+<p class="text-on-surface/40 font-light text-xl leading-relaxed">A sophisticated orchestration of data, reasoning, and execution designed for the modern hotelier.</p>
+</div>
+<div class="grid md:grid-cols-3 gap-16">
+<div class="group">
+<div class="text-primary font-serif text-6xl mb-10 opacity-10 group-hover:opacity-100 transition-opacity duration-700">01</div>
+<h3 class="font-headline text-2xl font-bold mb-6 text-white group-hover:text-primary transition-colors duration-500">Integrate</h3>
+<p class="text-on-surface/50 text-base leading-relaxed font-light">We unify your PMS and CRM data into a single, elegant guest narrative, removing technical silos.</p>
+<div class="mt-12 h-[1px] w-16 bg-primary/30 group-hover:bg-primary group-hover:w-full transition-all duration-700"></div>
+</div>
+<div class="group">
+<div class="text-primary font-serif text-6xl mb-10 opacity-10 group-hover:opacity-100 transition-opacity duration-700">02</div>
+<h3 class="font-headline text-2xl font-bold mb-6 text-white group-hover:text-primary transition-colors duration-500">Reason</h3>
+<p class="text-on-surface/50 text-base leading-relaxed font-light">Retain AI identifies subtle stay patterns to predict exactly when and why a guest will return.</p>
+<div class="mt-12 h-[1px] w-16 bg-primary/30 group-hover:bg-primary group-hover:w-full transition-all duration-700"></div>
+</div>
+<div class="group">
+<div class="text-primary font-serif text-6xl mb-10 opacity-10 group-hover:opacity-100 transition-opacity duration-700">03</div>
+<h3 class="font-headline text-2xl font-bold mb-6 text-white group-hover:text-primary transition-colors duration-500">Personalize</h3>
+<p class="text-on-surface/50 text-base leading-relaxed font-light">Execute multi-channel campaigns that feel like personal invitations rather than marketing.</p>
+<div class="mt-12 h-[1px] w-16 bg-primary/30 group-hover:bg-primary group-hover:w-full transition-all duration-700"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Features Section -->
+<section class="py-40 bg-surface">
+<div class="max-w-7xl mx-auto px-8">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-10">
+<!-- Large Feature 1 -->
+<div class="md:col-span-8 bg-surface-container hairline-border p-16 relative overflow-hidden min-h-[550px] flex flex-col justify-center group">
+<div class="relative z-10 max-w-sm">
+<span class="text-primary font-bold text-[0.65rem] uppercase tracking-[0.4em] mb-6 block">Intelligence</span>
+<h3 class="font-headline text-4xl font-extrabold mb-8 tracking-tight text-white">Curation at the Core</h3>
+<p class="text-on-surface/40 font-light text-lg mb-12 leading-relaxed">Deep behavioral analysis goes beyond profiling to understand the emotional drivers of each guest stay.</p>
+<div class="flex flex-wrap gap-4">
+<span class="px-5 py-2.5 bg-secondary text-[0.6rem] font-bold uppercase tracking-[0.2em] text-primary border border-primary/20 hover:border-primary transition-colors">Intent Mapping</span>
+<span class="px-5 py-2.5 bg-secondary text-[0.6rem] font-bold uppercase tracking-[0.2em] text-primary border border-primary/20 hover:border-primary transition-colors">Affinity Scoring</span>
+</div>
+</div>
+<div class="absolute right-[-5%] bottom-[-5%] w-1/2 opacity-30 group-hover:opacity-60 transition-opacity duration-1000">
+<img alt="Data Visualization" class="w-full h-full object-contain grayscale invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD69_KSDoWvo4RhCqd54ak9bwVlnen6inUFa0L1I_p6Bw46ZrvpLTnp5lS2E1n2--7_wxAlunnt4LYu9-K0Mmw1DusT7HnS0c7ce_5i6Kee2b_ZoIVvANccl9rxQMsr116vqJ7-Lpbgv-SfcTm5whLN3rQX3vKW_dhhJ11TLhGmk_k3NiMeD_8qwwKqosqi0c27OYteOKTXarasfjdCjlA-gPxkNMzAPkltqZOieKBWh1BgA6jTUGXtYfpUTWr0A6U7luhcArv7Xik"/>
+</div>
+</div>
+<!-- Feature 2 -->
+<div class="md:col-span-4 bg-primary p-16 text-secondary flex flex-col justify-between soft-elevation">
+<div>
+<span class="material-symbols-outlined text-secondary text-5xl mb-10">auto_fix_high</span>
+<h3 class="font-headline text-3xl font-bold mb-8 tracking-tight">Effortless Strategy</h3>
+<p class="text-secondary/70 text-base leading-relaxed font-medium mb-10">Our AI autonomously builds cohorts and triggers bespoke re-engagements.</p>
+</div>
+<button class="text-secondary border-b-2 border-secondary/30 pb-2 text-[0.7rem] uppercase tracking-[0.3em] font-black hover:border-secondary transition-all self-start">View Mechanisms</button>
+</div>
+<!-- Feature 3 -->
+<div class="md:col-span-4 bg-surface-container-high p-12 flex flex-col gap-10 hairline-border">
+<div class="w-full bg-secondary h-48 border border-outline/50 flex items-center justify-center overflow-hidden">
+<div class="w-2/3 space-y-4">
+<div class="h-[1px] bg-primary w-1/3"></div>
+<div class="h-[1px] bg-outline w-full"></div>
+<div class="h-[1px] bg-outline w-2/3"></div>
+</div>
+</div>
+<div>
+<h3 class="font-headline text-2xl font-bold mb-5 text-white">Editorial Communications</h3>
+<p class="text-on-surface/40 text-base font-light leading-relaxed">Design systems that prioritize photography and whitespace for high-end conversions.</p>
+</div>
+</div>
+<!-- Feature 4 -->
+<div class="md:col-span-8 bg-surface-container hairline-border p-16 flex flex-col md:flex-row items-center gap-16 overflow-hidden">
+<div class="flex-shrink-0 w-full md:w-1/3">
+<img alt="ROI Tracking" class="grayscale invert brightness-150 hover:grayscale-0 hover:invert-0 hover:brightness-100 transition-all duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6wnOcQZn3z39rq0CG7koZcGItP-rgtmKnrJQpx1O8Xyf4XzDFJ8sHDULfOiPxk86uThWISieBmuWgks9HfTm3RlsjCwuDuJbCOehs208dLQYb9oyuC5hWlwx5jtgwZUbtNtJiqC9b5n30QcbQJHHnyJRlFrXJJd0XD9LJPA9ImDoeGJYfmpUX8B-bN-UunOJStlqBhv-OQBtogR_XYyQEO7iBdUWgk9OSBtrtP98jz0jrhUTJFEy0UMxQEZKdyHZbK-QFrNoYBPc"/>
+</div>
+<div class="flex-1">
+<h3 class="font-headline text-3xl font-bold mb-8 tracking-tight text-white">Performance Transparency</h3>
+<p class="text-on-surface/40 text-base font-light mb-10 leading-relaxed">Direct attribution for every engagement. See exactly how Lumière intelligence translates to incremental revenue.</p>
+<div class="flex items-center gap-6 text-primary font-bold">
+<span class="material-symbols-outlined text-3xl">trending_up</span>
+<span class="text-[0.8rem] uppercase tracking-[0.3em]">24% Lift in Direct Booking Value</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-48 max-w-7xl mx-auto px-8">
+<div class="bg-surface-container-high p-24 text-center relative overflow-hidden border border-primary/20">
+<div class="absolute inset-0 opacity-10">
+<div class="absolute top-[-50%] left-[-10%] w-[100%] h-[200%] bg-primary rounded-full blur-[200px]"></div>
+</div>
+<div class="relative z-10">
+<h2 class="font-headline text-5xl md:text-7xl font-extrabold text-white mb-10 tracking-tighter">Define Your <span class="italic font-normal text-primary gold-text-glow">Legacy</span></h2>
+<p class="text-on-surface/40 text-xl max-w-2xl mx-auto mb-16 font-light leading-relaxed">Join an elite group of hotels leveraging Retain AI to craft more meaningful guest relationships.</p>
+<button class="bg-primary text-secondary px-16 py-7 text-[0.75rem] uppercase tracking-[0.4em] font-black hover:bg-white transition-all duration-700 soft-elevation">
+                        Initiate Consultation
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-secondary border-t border-outline/30 py-24 px-8">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16 mb-24">
+<div class="col-span-1">
+<div class="text-2xl font-serif font-semibold tracking-tighter text-primary mb-10">Retain AI</div>
+<p class="text-[0.75rem] text-on-surface/40 font-light leading-relaxed max-w-xs">Elevating the luxury guest experience through refined intelligence and curated engagement.</p>
+</div>
+<div>
+<h4 class="font-sans text-[0.7rem] uppercase tracking-[0.3em] text-white font-bold mb-10">Solution</h4>
+<div class="flex flex-col gap-6">
+<a class="text-[0.75rem] text-on-surface/40 hover:text-primary transition-colors duration-500" href="#">Lumière Engine</a>
+<a class="text-[0.75rem] text-on-surface/40 hover:text-primary transition-colors duration-500" href="#">Ecosystem</a>
+<a class="text-[0.75rem] text-on-surface/40 hover:text-primary transition-colors duration-500" href="#">Concierge Support</a>
+</div>
+</div>
+<div>
+<h4 class="font-sans text-[0.7rem] uppercase tracking-[0.3em] text-white font-bold mb-10">House</h4>
+<div class="flex flex-col gap-6">
+<a class="text-[0.75rem] text-on-surface/40 hover:text-primary transition-colors duration-500" href="#">About</a>
+<a class="text-[0.75rem] text-on-surface/40 hover:text-primary transition-colors duration-500" href="#">Privacy</a>
+<a class="text-[0.75rem] text-on-surface/40 hover:text-primary transition-colors duration-500" href="#">Terms</a>
+</div>
+</div>
+<div>
+<h4 class="font-sans text-[0.7rem] uppercase tracking-[0.3em] text-white font-bold mb-10">Newsletter</h4>
+<div class="flex border-b border-primary/30 pb-3 group">
+<input class="w-full bg-transparent border-none focus:ring-0 p-0 text-sm font-light text-white placeholder:text-on-surface/30" placeholder="Email Address" type="email"/>
+<button class="text-primary group-hover:translate-x-1 transition-transform">
+<span class="material-symbols-outlined text-2xl">arrow_right_alt</span>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 pt-12 border-t border-outline/10">
+<p class="font-sans text-[0.65rem] tracking-[0.2em] uppercase text-on-surface/30">© 2024 Retain AI. All rights reserved.</p>
+<div class="flex gap-12">
+<a class="text-[0.65rem] uppercase tracking-[0.25em] text-on-surface/30 hover:text-primary transition-colors duration-500" href="#">LinkedIn</a>
+<a class="text-[0.65rem] uppercase tracking-[0.25em] text-on-surface/30 hover:text-primary transition-colors duration-500" href="#">Instagram</a>
+</div>
+</div>
+</footer>
+</body></html>

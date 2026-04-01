@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Retain AI | Luxury Concierge Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#0A0A0B",
+              "accent": "#C5A059",
+              "accent-dark": "#94763C",
+              "accent-light": "#DBC08D",
+              "background": "#0F0F10",
+              "surface": "#161618",
+              "surface-lighter": "#1E1E21",
+              "neutral-subtle": "#1A1A1C",
+              "border-subtle": "#2A2A2D",
+              "error": "#ffb4ab",
+              "on-background": "#E6E1E5",
+              "on-surface": "#E6E1E5",
+            },
+            fontFamily: {
+              "headline": ["Noto Serif", "serif"],
+              "body": ["Inter", "sans-serif"],
+              "label": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      body { font-family: 'Inter', sans-serif; background-color: #0F0F10; color: #E6E1E5; }
+      .font-serif { font-family: 'Noto Serif', serif; }
+      .font-sans { font-family: 'Inter', sans-serif; }
+      .hairline-border { border-width: 0.5px; border-color: rgba(197, 200, 200, 0.1); }
+      .soft-shadow { box-shadow: 0 4px 30px -2px rgba(0, 0, 0, 0.5); }
+      .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: #2A2A2D; border-radius: 10px; }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+      }
+      .gold-gradient {
+        background: linear-gradient(135deg, #C5A059 0%, #94763C 100%);
+      }
+      .gold-text-gradient {
+        background: linear-gradient(135deg, #DBC08D 0%, #C5A059 100%);
+        -webkit-text-fill-color: transparent;
+      }
+    </style>
+</head>
+<body class="bg-background font-body text-on-background selection:bg-accent/30 selection:text-white">
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-full flex flex-col bg-primary w-20 md:w-64 border-r-[0.5px] border-white/5 z-40">
+<div class="flex items-center gap-3 px-6 py-8 mb-4">
+<div class="w-10 h-10 bg-accent flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-2xl font-bold" data-icon="loyalty">loyalty</span>
+</div>
+<div class="hidden md:block">
+<h1 class="text-lg font-serif font-semibold text-white tracking-tight leading-none">Retain AI</h1>
+<p class="text-[10px] uppercase tracking-[0.15em] text-accent font-sans mt-1">Luxury Concierge</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-accent bg-accent/10 border-r-2 border-accent font-sans text-[0.6875rem] uppercase tracking-[0.05em] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-medium">Desk</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-white/50 hover:text-accent hover:bg-white/5 font-sans text-[0.6875rem] uppercase tracking-[0.05em] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-medium">Insights</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-white/50 hover:text-accent hover:bg-white/5 font-sans text-[0.6875rem] uppercase tracking-[0.05em] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="loyalty">loyalty</span>
+<span class="font-medium">Retain</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-white/50 hover:text-accent hover:bg-white/5 font-sans text-[0.6875rem] uppercase tracking-[0.05em] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="font-medium">Analysis</span>
+</a>
+</nav>
+<div class="px-4 py-6 border-t border-white/5 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-white/40 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="help_outline">help_outline</span>
+<span class="font-sans text-[0.6875rem] uppercase tracking-[0.05em]">Help</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-white/40 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="logout">logout</span>
+<span class="font-sans text-[0.6875rem] uppercase tracking-[0.05em]">Log Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-20 md:ml-64 min-h-screen flex flex-col">
+<!-- Top App Bar -->
+<header class="flex justify-between items-center px-8 h-16 md:h-20 w-full sticky top-0 z-30 bg-background/80 backdrop-blur-md border-b-[0.5px] border-white/5">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-3 bg-surface px-4 py-1.5 border border-white/5">
+<span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
+<span class="text-[10px] font-sans font-medium tracking-[0.05em] text-white/50 uppercase">Connected: Demo Dataset (120 Guests)</span>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<div class="relative group hidden lg:block">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-white/30 text-lg" data-icon="search">search</span>
+<input class="bg-surface border border-white/5 py-2 pl-10 pr-4 text-xs w-64 focus:ring-1 focus:ring-accent/50 transition-all placeholder:text-white/20 text-white" placeholder="Search guests or luxury campaigns..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-white/40 hover:text-accent transition-colors duration-300">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-white/40 hover:text-accent transition-colors duration-300">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="h-8 w-8 border border-white/10 p-0.5 ml-2 overflow-hidden">
+<img alt="User profile avatar" class="w-full h-full object-cover grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWKTIviHUhxWMQuwtOfDiWYwdNSu1O5aKefcriu0bnXT-313G-EuOq-LKvNBj-3YCkfyFbpwGk09PoY5SDJy_czqB_Q4N0T0R3OD645a38hgHeTBI2wyE06Ini2tJ-5z2otvhEkn-I2JuGYVhQlw21__FeskE0HaNZxX8I0Zg5D4Q59GZV8YcUGTKqnzp4H_fv4JnXrR0ta-0vtheK1MqZ_1xr-3Qn6qpMO4dNIkymx-V2yDJUHUTxldeBufTHNfdtAWxtaIr9CKU"/>
+</div>
+</div>
+</div>
+</header>
+<section class="flex-1 px-8 py-8 pb-32">
+<!-- Campaign Input Panel -->
+<div class="max-w-5xl mx-auto mb-16">
+<div class="bg-surface p-1 border-b-2 border-accent shadow-2xl">
+<div class="flex items-center gap-2 p-3">
+<div class="flex-1 flex items-center bg-background border border-white/5 px-6 py-4 focus-within:border-accent/40 transition-all">
+<span class="material-symbols-outlined text-accent mr-4" data-icon="auto_awesome">auto_awesome</span>
+<input class="bg-transparent border-none focus:ring-0 w-full text-lg font-serif text-white placeholder-white/10" type="text" value="Find anniversary guests from last 90 days"/>
+</div>
+<button class="bg-accent text-primary px-10 py-5 font-sans font-bold tracking-widest uppercase text-xs hover:bg-accent-light transition-all flex items-center gap-3">
+<span>Run Campaign</span>
+<span class="material-symbols-outlined text-sm" data-icon="east">east</span>
+</button>
+</div>
+<div class="flex flex-wrap items-center gap-4 px-6 pb-4 pt-1">
+<div class="flex flex-wrap items-center gap-3 px-6 pb-5 pt-2">
+<div class="group relative">
+<button class="flex items-center gap-3 px-4 py-2 bg-background border border-white/10 hover:border-accent/40 transition-all" onclick="this.nextElementSibling?.classList?.toggle('hidden')"><span class="text-[10px] font-sans font-semibold text-white/40 uppercase tracking-[0.15em]">Last Visit</span><div class="h-3 w-[1px] bg-white/10"></div><span class="text-[10px] font-sans font-medium text-white/60">Anytime</span><span class="material-symbols-outlined text-sm text-accent/50 group-hover:text-accent" data-icon="expand_more">expand_more</span></button><div class="hidden absolute top-full left-0 mt-1 w-48 bg-surface border border-white/10 shadow-xl z-50 py-1 font-sans">
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">Anytime</div>
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">Last 7 Days</div>
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">Last 30 Days</div>
+</div>
+</div>
+<div class="group relative">
+<button class="flex items-center gap-3 px-4 py-2 bg-background border border-white/10 hover:border-accent/40 transition-all" onclick="this.nextElementSibling?.classList?.toggle('hidden')"><span class="text-[10px] font-sans font-semibold text-white/40 uppercase tracking-[0.15em]">Spend</span><div class="h-3 w-[1px] bg-white/10"></div><span class="text-[10px] font-sans font-medium text-white/60">Any Amount</span><span class="material-symbols-outlined text-sm text-accent/50 group-hover:text-accent" data-icon="expand_more">expand_more</span></button><div class="hidden absolute top-full left-0 mt-1 w-48 bg-surface border border-white/10 shadow-xl z-50 py-1 font-sans">
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">Any Amount</div>
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">$500+</div>
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">$1k+</div>
+</div>
+</div>
+<div class="group relative">
+<button class="flex items-center gap-3 px-4 py-2 bg-background border border-white/10 hover:border-accent/40 transition-all" onclick="this.nextElementSibling?.classList?.toggle('hidden')"><span class="text-[10px] font-sans font-semibold text-white/40 uppercase tracking-[0.15em]">Complaint</span><div class="h-3 w-[1px] bg-white/10"></div><span class="text-[10px] font-sans font-medium text-white/60">All</span><span class="material-symbols-outlined text-sm text-accent/50 group-hover:text-accent" data-icon="expand_more">expand_more</span></button><div class="hidden absolute top-full left-0 mt-1 w-48 bg-surface border border-white/10 shadow-xl z-50 py-1 font-sans">
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">All</div>
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">No</div>
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">Yes</div>
+</div>
+</div><div class="group relative">
+<button class="flex items-center gap-3 px-4 py-2 bg-background border border-white/10 hover:border-accent/40 transition-all" onclick="this.nextElementSibling?.classList?.toggle('hidden')">
+<span class="text-[10px] font-sans font-semibold text-white/40 uppercase tracking-[0.15em]">Guest Type</span>
+<div class="h-3 w-[1px] bg-white/10"></div>
+<span class="text-[10px] font-sans font-medium text-white/60">All Types</span>
+<span class="material-symbols-outlined text-sm text-accent/50 group-hover:text-accent" data-icon="expand_more">expand_more</span>
+</button>
+<div class="hidden absolute top-full left-0 mt-1 w-48 bg-surface border border-white/10 shadow-xl z-50 py-1 font-sans">
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">All Types</div>
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">VIP</div>
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">Recurring</div>
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">First Timer</div>
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">Corporate</div>
+</div>
+</div>
+<div class="group relative">
+<button class="flex items-center gap-3 px-4 py-2 bg-background border border-white/10 hover:border-accent/40 transition-all" onclick="this.nextElementSibling?.classList?.toggle('hidden')">
+<span class="text-[10px] font-sans font-semibold text-white/40 uppercase tracking-[0.15em]">Send Limit</span>
+<div class="h-3 w-[1px] bg-white/10"></div>
+<span class="text-[10px] font-sans font-medium text-white/60">No Limit</span>
+<span class="material-symbols-outlined text-sm text-accent/50 group-hover:text-accent" data-icon="expand_more">expand_more</span>
+</button>
+<div class="hidden absolute top-full left-0 mt-1 w-48 bg-surface border border-white/10 shadow-xl z-50 py-1 font-sans">
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">No Limit</div>
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">50</div>
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">100</div>
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">250</div>
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">500</div>
+</div>
+</div>
+<div class="group relative">
+<button class="flex items-center gap-3 px-4 py-2 bg-background border border-white/10 hover:border-accent/40 transition-all" onclick="this.nextElementSibling?.classList?.toggle('hidden')">
+<span class="text-[10px] font-sans font-semibold text-white/40 uppercase tracking-[0.15em]">Campaign Type</span>
+<div class="h-3 w-[1px] bg-white/10"></div>
+<span class="text-[10px] font-sans font-medium text-white/60">All</span>
+<span class="material-symbols-outlined text-sm text-accent/50 group-hover:text-accent" data-icon="expand_more">expand_more</span>
+</button>
+<div class="hidden absolute top-full left-0 mt-1 w-48 bg-surface border border-white/10 shadow-xl z-50 py-1 font-sans">
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">All</div>
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">Email</div>
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">SMS</div>
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">Direct Mail</div>
+<div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">Multi-channel</div>
+</div>
+</div>
+<div class="ml-auto">
+<button class="text-[9px] font-sans font-bold text-white/20 uppercase tracking-widest hover:text-white/40 transition-colors flex items-center gap-2">
+      Clear Filters
+      <span class="material-symbols-outlined text-xs" data-icon="close">close</span>
+</button>
+</div>
+</div></div>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-12 gap-8">
+<!-- Left: Guest List (Col-3) -->
+<div class="col-span-12 lg:col-span-3 flex flex-col gap-6">
+<div class="flex items-center justify-between px-1">
+<h2 class="font-serif text-[11px] font-bold uppercase tracking-[0.2em] text-white/60">47 Guests Matched</h2>
+<span class="material-symbols-outlined text-white/30 cursor-pointer text-lg" data-icon="sort">sort</span>
+</div>
+<div class="space-y-4 overflow-y-auto max-h-[600px] pr-2 custom-scrollbar">
+<!-- Active Card -->
+<div class="bg-surface-lighter p-5 border-l-[3px] border-accent soft-shadow hairline-border cursor-pointer transition-all">
+<div class="flex justify-between items-start mb-3">
+<h3 class="font-serif text-sm font-semibold text-white">Sarah Mitchell</h3>
+<span class="text-accent text-[9px] font-bold px-2 py-1 bg-accent/10 tracking-[0.1em] uppercase">VIP</span>
+</div>
+<div class="space-y-2">
+<p class="text-[10px] font-sans text-white/50 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs" data-icon="local_activity">local_activity</span> Spend: $1,250
+                                </p>
+<p class="text-[10px] font-sans text-accent-light font-medium flex items-center gap-2">
+<span class="material-symbols-outlined text-xs" data-icon="star">star</span> Strategy: Anniversary Gift
+                                </p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface p-5 hairline-border border-white/5 hover:bg-surface-lighter transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-3">
+<h3 class="font-serif text-sm font-semibold text-white/70">James Henderson</h3>
+<span class="text-white/30 text-[9px] font-bold px-2 py-1 bg-white/5 tracking-[0.1em] uppercase">Recurring</span>
+</div>
+<div class="space-y-2">
+<p class="text-[10px] font-sans text-white/40 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs" data-icon="local_activity">local_activity</span> Spend: $840
+                                </p>
+<p class="text-[10px] font-sans text-white/40 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs" data-icon="upgrade">upgrade</span> Strategy: Suite Upgrade
+                                </p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface p-5 hairline-border border-white/5 hover:bg-surface-lighter transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-3">
+<h3 class="font-serif text-sm font-semibold text-white/70">Elena Rodriguez</h3>
+<span class="text-error text-[9px] font-bold px-2 py-1 bg-error/10 tracking-[0.1em] uppercase">Recovery</span>
+</div>
+<div class="space-y-2">
+<p class="text-[10px] font-sans text-white/40 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs" data-icon="local_activity">local_activity</span> Spend: $2,100
+                                </p>
+<p class="text-[10px] font-sans text-white/40 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs" data-icon="assignment_return">assignment_return</span> Strategy: Apology &amp; Credit
+                                </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Center: Agent Reasoning Panel (Col-5) -->
+<div class="col-span-12 lg:col-span-5">
+<div class="bg-surface h-full hairline-border border-white/10 shadow-sm relative overflow-hidden flex flex-col">
+<div class="p-8 border-b border-white/5 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-accent/10 flex items-center justify-center border border-accent/20">
+<span class="material-symbols-outlined text-accent" data-icon="psychology">psychology</span>
+</div>
+<div>
+<h2 class="font-serif text-lg font-semibold text-white">Agent Reasoning</h2>
+<p class="text-[10px] uppercase tracking-widest text-white/30 font-sans mt-0.5">Guest ID: 8842 • Sarah Mitchell</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-white/20" data-icon="more_vert">more_vert</span>
+</div>
+<div class="flex-1 p-8 space-y-8 relative overflow-y-auto custom-scrollbar">
+<div class="space-y-6">
+<h3 class="text-[10px] font-bold uppercase tracking-[0.2em] text-accent/60">Signal Analysis</h3>
+<div class="grid grid-cols-2 gap-6">
+<div class="p-4 bg-background border border-white/5">
+<p class="text-[9px] font-bold text-accent uppercase tracking-wider mb-2">Loyalty Context</p>
+<p class="text-xs font-serif italic text-white/80">High Lifetime Spend • Tier 1</p>
+</div>
+<div class="p-4 bg-background border border-white/5">
+<p class="text-[9px] font-bold text-accent uppercase tracking-wider mb-2">Temporal Trigger</p>
+<p class="text-xs font-serif italic text-white/80">Anniversary Cycle Detected</p>
+</div>
+</div>
+<ul class="space-y-4">
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-accent text-lg mt-0.5" data-icon="done">done</span>
+<p class="text-[13px] text-white/70 leading-relaxed">Top 5% of restaurant patrons over trailing 36 months.</p>
+</li>
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-white/20 text-lg mt-0.5" data-icon="history">history</span>
+<p class="text-[13px] text-white/70 leading-relaxed">Minor friction identified in Q2 2024: Valet service delay (15 min).</p>
+</li>
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-accent text-lg mt-0.5" data-icon="lightbulb">lightbulb</span>
+<p class="text-[13px] text-white/70 leading-relaxed">Model predicts <span class="text-accent font-semibold">+42% LTV uplift</span> with personalized Spa engagement.</p>
+</li>
+</ul>
+</div>
+<div class="mt-auto pt-8">
+<div class="border-t border-white/5 pt-8">
+<div class="bg-primary p-6 border-l-2 border-accent">
+<p class="text-[9px] font-bold text-accent uppercase tracking-[0.2em] mb-2">Calculated Strategy</p>
+<p class="text-xl font-serif text-white">Re-engagement with Premium Spa Sanctuary Credit</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Email Preview (Col-4) -->
+<div class="col-span-12 lg:col-span-4">
+<div class="flex flex-col h-full bg-surface hairline-border border-white/10 shadow-sm overflow-hidden">
+<div class="px-8 py-5 border-b border-white/5 flex justify-between items-center bg-primary">
+<h2 class="font-serif text-[11px] font-bold uppercase tracking-[0.2em] text-white/50">Preview: Correspondence</h2>
+<div class="flex gap-1.5">
+<div class="w-2 h-2 bg-white/10"></div>
+<div class="w-2 h-2 bg-white/10"></div>
+<div class="w-2 h-2 bg-accent/40"></div>
+</div>
+</div>
+<div class="flex-1 p-8 overflow-y-auto custom-scrollbar">
+<div class="max-w-md mx-auto">
+<div class="mb-8 pb-4 border-b border-white/5 text-[11px] font-sans space-y-1">
+<p class="text-white/30">Recipient: <span class="text-white/80">sarah.mitchell@outlook.com</span></p>
+<p class="text-white/30">Subject: <span class="text-accent font-serif italic">Celebrating Your Upcoming Milestone at The Grand Reserve</span></p>
+</div>
+<div class="font-serif text-sm leading-relaxed text-white/70 space-y-6">
+<div class="aspect-[16/9] bg-background mb-8 overflow-hidden">
+<img alt="luxury hotel spa interior" class="w-full h-full object-cover grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5xlLGrvcDnw94h04IVQCoY8AHxNTHY0cpgLK--hvEmt5UTsjWu1AVecf707jpww8f6fxuTvgxbGXJCHrFJtdkj3vnEzN6LYc2VnY69-swSC9Ru1pX1KY1IRoi3oS0bYyJE8dT8DttWYCTIrwj8wB30fCmTf79QmuLXH0l5485lt8ZFcqmZt6sWeFXT4ez_H2c0xp17dZrgr5lWYvLUZbo4J8rpptCsU3KfkmpHbS25_MBWb9krS7lcFcdXROKIRObxXWYSoQK9sc"/>
+</div>
+<p>Dear Ms. Mitchell,</p>
+<p>As your anniversary approaches, we wish to extend our warmest regards and gratitude for your continued patronage of The Grand Reserve.</p>
+<p>In recognition of your upcoming celebration, we have reserved a <span class="text-accent font-semibold">$150 Spa Sanctuary credit</span> within your private account.</p>
+<p>We look forward to curating another exceptional stay for you soon.</p>
+<p class="pt-4 font-semibold text-white">The Concierge Team<br/><span class="text-[10px] uppercase tracking-widest font-sans opacity-30">Retain AI Platform</span></p>
+</div>
+</div>
+</div>
+<div class="p-8 pt-0">
+<button class="w-full bg-transparent border border-accent text-accent font-sans text-[10px] font-bold uppercase tracking-[0.2em] py-4 hover:bg-accent hover:text-primary transition-all flex items-center justify-center gap-3">
+<span>Send Personal Invitation</span>
+<span class="material-symbols-outlined text-sm" data-icon="send">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Action Bar -->
+<footer class="fixed bottom-0 left-20 md:left-64 right-0 z-40 bg-primary border-t-[0.5px] border-white/10 px-10 py-5 flex items-center justify-between">
+<div class="flex items-center gap-6">
+<div class="flex -space-x-1.5">
+<img class="w-7 h-7 border-2 border-primary object-cover grayscale opacity-70" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqre1T1tSArHH6jX2XCj2k5FbwVX3gdC_8eFPu6HXthRYL_JkF8lOSOycf4eKRQ_39CtbrAADLYuQUNR6bR5eyabTarwNCgDz7E15bYFLYUW1pANfsbWDBzhkQqUc96mKK6X4S0zOTotgKH3M7RckaJF7vSXTHzXQe22Pp0ZNjMFHpvbqHNMPQ1YP_rYFQ0JzSgzSSY7R_bju5Fa8lT3Y-DsoZLQJoLtpSQYuxlmirymQouoZIgvkeRG6hbgA3eX8d2Q-eScj7OEQ"/>
+<img class="w-7 h-7 border-2 border-primary object-cover grayscale opacity-70" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZlw8a8iBLM4GG6AxatCz1UdMIr6Pf_HNLYTRo0c5IJcU0-rRDmUwY5Y_qGEtiSMW6iGoWlK1nBdyRRx-OsdA606bEH2YjwzROa3p3HnHz2qVME_XMlZCSln7akaG_wsWRE4mDaj0J1XPBJuliWPq5U0XeTQ8TK2scpBYVjh9ugpUqmGlfXxvlck_tqCpsSV_7jIm_8Ewo1f5Chi5NsNbf2YwC4rMNtfp5Lots8wmDUqiWH8aGy4qBfUnRgXQ9TZV2wv8p3qOVat4"/>
+<div class="w-7 h-7 border-2 border-primary bg-surface flex items-center justify-center text-[9px] font-bold text-accent">+45</div>
+</div>
+<p class="text-[11px] font-sans text-white/50 tracking-wide">47 elite guests curated for this campaign.</p>
+</div>
+<div class="flex gap-6">
+<button class="px-6 py-3 text-[10px] font-bold text-white/70 uppercase tracking-[0.15em] border border-white/10 hover:bg-white/5 transition-all">
+                    Schedule Batch
+                </button>
+<button class="px-10 py-3 text-[10px] font-bold bg-accent text-primary uppercase tracking-[0.15em] hover:bg-accent-light transition-all flex items-center gap-3">
+<span>Execute Campaign (All 47)</span>
+<span class="material-symbols-outlined text-sm" data-icon="auto_awesome">auto_awesome</span>
+</button>
+</div>
+</footer>
+</main>
+</body></html>
