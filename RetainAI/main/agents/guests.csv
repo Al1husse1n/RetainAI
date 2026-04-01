@@ -1,0 +1,51 @@
+id,name,email,total_spend,last_visit_days,visit_count,event,room_preference,favorite_service,had_complaint,complaint_type,cancellation_count,country
+e3ee31fb-0528-4638-abe2-6068f4ea2636,Roberta Black,willisheather@example.com,1462,191,2,birthday,suite,spa,False,,0,France
+9c8b3c16-6166-42f0-97d1-44d0003f4d7c,James Rosario,christopherhodge@example.net,4759,57,7,,ocean view,,True,,1,UK
+3f78eb77-f9ad-44f9-85e5-bf348f5a1122,Charles Hood,qwilliams@example.net,782,179,2,anniversary,standard,spa,True,,1,USA
+4ecc285a-1d2d-4fbf-bd1a-22f1fd8417b2,Stephanie Allen,alexis85@example.org,83,138,1,birthday,deluxe,,False,,0,USA
+bdde6ea8-7348-41a2-bfbc-83300f1090de,Bradley Martinez,xrodgers@example.com,1955,38,3,birthday,standard,dinner,True,,1,UK
+42fce087-da78-4449-ae90-517204d60ddf,Christie Carpenter,hvillanueva@example.com,4843,172,3,birthday,ocean view,dinner,True,dirty room,0,UAE
+af5f79c1-26b6-4d5f-bc74-dfdb18babb75,Melissa Perez,kimberlybruce@example.com,4510,166,1,birthday,ocean view,dinner,True,late check-in,1,UAE
+4246aad5-5e72-4272-85de-b9fce3323e05,Jaime Moran,amyramirez@example.net,2523,112,4,anniversary,standard,spa,False,,0,Germany
+3bb06cd0-865c-4e69-92bd-32b39fd155de,Melissa Horton,phillip97@example.org,2010,93,6,birthday,ocean view,dinner,False,,3,Germany
+25675aea-ff48-4a90-8e1c-3d8ec7f9024b,Carrie Herring,john37@example.org,1689,89,10,anniversary,deluxe,dinner,False,,0,UK
+2661e5b9-71a1-4948-8656-9dec818ddfeb,Benjamin Alexander,natashamolina@example.net,3381,193,5,anniversary,ocean view,pool,True,,3,Ethiopia
+87ddf54b-9602-4bb7-b6d3-4edfaf9827f6,Hector Calderon,richard07@example.com,661,30,7,,deluxe,spa,False,,3,UK
+b316f9a7-f0bf-4284-826a-6e56a1b72788,Jody Rivera,carolyn13@example.net,543,48,10,birthday,standard,,True,spa unavailable,3,USA
+4708de60-459c-4d35-b182-2957698d68d7,Zachary Sullivan,burtonamy@example.org,4929,87,8,birthday,deluxe,pool,True,spa unavailable,0,France
+a1fd729f-38f7-40f1-8ce2-a3c66cdb3aca,Raymond Lowe,bryan32@example.org,3068,123,2,anniversary,standard,pool,False,,2,France
+7bbc4991-4264-4d4f-95eb-4c9d3f3aedde,Veronica Williams,laurencruz@example.com,1771,86,6,birthday,deluxe,pool,False,,1,Ethiopia
+29f0bb57-3cb1-4152-9920-2c8d183ee4dc,Gregory Warren,kimberly13@example.net,4831,132,5,anniversary,deluxe,,True,late check-in,3,France
+a2860356-5ecb-4fd7-9a1d-357fc2e7bc32,Danielle Frank,brandisantos@example.org,1807,64,4,,standard,gym,False,,2,UK
+88c4b13b-d09e-4fcd-8550-191a3b9572cc,Susan Black,wardjason@example.net,3404,22,8,anniversary,deluxe,spa,True,,3,Ethiopia
+568308bb-df66-4bd7-961e-ef9f23cf7913,James Walters,eguzman@example.org,3885,58,1,birthday,standard,pool,True,late check-in,2,France
+c76c5dae-65ea-4fa9-956a-947489fffaf3,Mikayla White,bnichols@example.net,625,193,7,,suite,,False,,1,Ethiopia
+c8f49ce8-8424-4438-bb2d-017e172d591d,Patricia Turner,jacqueline95@example.net,3481,122,3,,ocean view,spa,False,,2,Ethiopia
+8b4e290f-ad61-439a-a834-89cbef0cf5c9,Russell Reed,gonzalezgary@example.org,2054,200,7,birthday,ocean view,spa,False,,2,UK
+dad33173-8be0-42ae-a9a1-4c25bdff702d,Amber Chavez,ortegaapril@example.com,1316,179,6,birthday,ocean view,dinner,True,spa unavailable,1,Ethiopia
+a63a6c7f-a2c1-409a-ba36-77c0922dc0ef,Joy Coleman,mistyingram@example.org,3753,55,10,birthday,ocean view,gym,True,dirty room,0,UK
+3cbc7b64-420e-41e8-89d8-fd6ba4e057a4,Lauren Simmons,kimberly35@example.com,3707,151,6,,standard,,True,spa unavailable,2,USA
+3c40e559-5fa5-44e7-a7d6-2f42a14b6869,Tiffany Bolton,mendozamary@example.com,3517,6,5,,ocean view,,False,,3,USA
+17f7b9ec-287e-4ddc-8637-d6becedea355,Keith Moore,jason48@example.com,4242,58,6,birthday,deluxe,spa,True,,3,UK
+95c7498c-c505-45a4-9d4b-1278996d8574,Ronald Buchanan,jacqueline83@example.com,142,136,1,birthday,deluxe,gym,True,dirty room,2,Ethiopia
+5c39505b-fd97-4c1d-b7ec-28bd1150f2d6,Jonathan Collins,johnsonheidi@example.org,4475,26,10,,deluxe,gym,True,dirty room,0,USA
+aa416863-3b4a-4c92-8c8a-7c24428ca700,Julie Knight,melissa90@example.net,328,148,2,birthday,suite,,True,dirty room,2,Germany
+63fcd876-2885-4c0e-ae5c-7cd2621c3522,John Tyler,morriskatrina@example.com,1864,132,1,birthday,ocean view,dinner,True,spa unavailable,3,Germany
+74033093-a0b1-49ef-baa1-54fba57a7211,Michael Rose,phillipzimmerman@example.com,172,145,4,birthday,ocean view,dinner,True,,1,Ethiopia
+9945e159-7bfc-4c8f-9bc5-8ec2c3e2123f,James Clark,john13@example.com,2309,52,5,birthday,suite,gym,True,,0,Ethiopia
+0c621b1b-2b3d-4948-a22c-64ce94848fb4,Benjamin Martin,andrea70@example.com,1658,19,7,anniversary,ocean view,spa,True,dirty room,1,UAE
+a4d093b2-8f2e-48f5-9214-948a507cc81d,Raymond Fernandez,dreynolds@example.net,2574,142,9,,standard,dinner,True,,0,USA
+cb0b1cf8-0612-4bd7-bc53-d22e4d49bb2d,Jason Baker,marygraham@example.org,3850,23,1,,standard,,True,late check-in,1,UAE
+be182899-96f1-46ed-a834-9f239cfe8b45,Dr. Tamara Evans DDS,michaelcarol@example.net,855,173,2,,deluxe,pool,False,,3,Ethiopia
+d4c3d464-fb83-481c-8ff2-07868ba6d0a9,Chad Gray,wrightkenneth@example.com,674,11,10,,suite,spa,True,late check-in,2,Ethiopia
+6f7bc9e8-ed9a-4bfe-b5cb-9b8d4503353a,Tabitha Morris,jdalton@example.org,1812,134,10,,standard,gym,True,dirty room,1,UK
+94dbc64f-b92a-4844-96af-8e288f1ee52c,Jeremy Lloyd,lanecarlos@example.net,3802,19,2,anniversary,ocean view,gym,False,,2,UAE
+216d6ea9-375a-43bd-b8bb-5e3bb7147fc6,Daniel Scott,ddavis@example.com,372,37,7,anniversary,suite,gym,True,late check-in,2,UK
+9409f34f-d463-4b7e-9a38-1b55b1209cfa,Richard Rojas,lmartinez@example.net,1478,37,8,,suite,dinner,False,,2,Germany
+1ead4034-b362-4105-9c82-2875578e702d,Caitlin Robles,butlerrichard@example.org,1719,86,3,anniversary,standard,spa,True,dirty room,1,Germany
+26a1b69e-d182-4453-bd1b-0c0c320b2825,Thomas Oliver,christina10@example.net,2911,145,8,anniversary,deluxe,,False,,2,France
+b3850071-e0d6-466a-9421-a1873615b6fc,Catherine Jackson,cpeterson@example.com,4795,49,9,anniversary,standard,dinner,False,,3,Germany
+de5c84b0-6fb0-4977-b646-f6cb09a0a561,James West,shawnreed@example.org,2210,96,9,,ocean view,,False,,1,France
+387255d4-7c7e-4a78-895f-35dd4b625d3d,Miranda Soto,elizabethpowers@example.net,3259,71,3,anniversary,ocean view,dinner,False,,0,Germany
+387255d4-7c7e-4a78-895w-35dd4b645d3f,Ali Hussein,alihusseinali1284@gmail.com,1233,15,1,,standard,,True,dirty room,0,Ethiopia
+387255w1-7c7e-4a78-895w-35dd4b645d3f,Yafet Getachew,yafetman44@gmail.com,233,5,1,,deluxe,,False,,0,Ethiopia
