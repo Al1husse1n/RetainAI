@@ -60,7 +60,7 @@
 <body class="bg-background font-body text-on-background selection:bg-accent/30 selection:text-white">
 <!-- Sidebar Navigation -->
 <aside class="fixed left-0 top-0 h-full flex flex-col bg-primary w-20 md:w-64 border-r-[0.5px] border-white/5 z-40">
-<div class="flex items-center gap-3 px-6 py-8 mb-4">
+<a href="{% url 'landing' %}" class="flex items-center gap-3 px-6 py-8 mb-4 hover:opacity-90 transition-opacity">
 <div class="w-10 h-10 bg-accent flex items-center justify-center text-primary">
 <span class="material-symbols-outlined text-2xl font-bold" data-icon="loyalty">loyalty</span>
 </div>
@@ -68,9 +68,9 @@
 <h1 class="text-lg font-serif font-semibold text-white tracking-tight leading-none">Retain AI</h1>
 <p class="text-[10px] uppercase tracking-[0.15em] text-accent font-sans mt-1">Luxury Concierge</p>
 </div>
-</div>
+</a>
 <nav class="flex-1 px-4 space-y-2">
-<a class="flex items-center gap-3 px-4 py-3 text-accent bg-accent/10 border-r-2 border-accent font-sans text-[0.6875rem] uppercase tracking-[0.05em] transition-all" href="#">
+<a class="flex items-center gap-3 px-4 py-3 text-accent bg-accent/10 border-r-2 border-accent font-sans text-[0.6875rem] uppercase tracking-[0.05em] transition-all" href="{% url 'dashboard' %}">
 <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
 <span class="font-medium">Desk</span>
 </a>
@@ -105,7 +105,7 @@
 <div class="flex items-center gap-4">
 <div class="flex items-center gap-3 bg-surface px-4 py-1.5 border border-white/5">
 <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
-<span class="text-[10px] font-sans font-medium tracking-[0.05em] text-white/50 uppercase">Connected: Demo Dataset (120 Guests)</span>
+<span class="text-[10px] font-sans font-medium tracking-[0.05em] text-white/50 uppercase">Ollama + demo_guests.csv</span>
 </div>
 </div>
 <div class="flex items-center gap-8">
@@ -133,9 +133,9 @@
 <div class="flex items-center gap-2 p-3">
 <div class="flex-1 flex items-center bg-background border border-white/5 px-6 py-4 focus-within:border-accent/40 transition-all">
 <span class="material-symbols-outlined text-accent mr-4" data-icon="auto_awesome">auto_awesome</span>
-<input class="bg-transparent border-none focus:ring-0 w-full text-lg font-serif text-white placeholder-white/10" type="text" value="Find anniversary guests from last 90 days"/>
+<input id="campaign-query" class="bg-transparent border-none focus:ring-0 w-full text-lg font-serif text-white placeholder-white/10" type="text" value="Find anniversary guests from last 90 days" placeholder="Describe your campaign"/>
 </div>
-<button class="bg-accent text-primary px-10 py-5 font-sans font-bold tracking-widest uppercase text-xs hover:bg-accent-light transition-all flex items-center gap-3">
+<button id="run-campaign-btn" type="button" class="bg-accent text-primary px-10 py-5 font-sans font-bold tracking-widest uppercase text-xs hover:bg-accent-light transition-all flex items-center gap-3">
 <span>Run Campaign</span>
 <span class="material-symbols-outlined text-sm" data-icon="east">east</span>
 </button>
@@ -143,21 +143,21 @@
 <div class="flex flex-wrap items-center gap-4 px-6 pb-4 pt-1">
 <div class="flex flex-wrap items-center gap-3 px-6 pb-5 pt-2">
 <div class="group relative">
-<button class="flex items-center gap-3 px-4 py-2 bg-background border border-white/10 hover:border-accent/40 transition-all" onclick="this.nextElementSibling?.classList?.toggle('hidden')"><span class="text-[10px] font-sans font-semibold text-white/40 uppercase tracking-[0.15em]">Last Visit</span><div class="h-3 w-[1px] bg-white/10"></div><span class="text-[10px] font-sans font-medium text-white/60">Anytime</span><span class="material-symbols-outlined text-sm text-accent/50 group-hover:text-accent" data-icon="expand_more">expand_more</span></button><div class="hidden absolute top-full left-0 mt-1 w-48 bg-surface border border-white/10 shadow-xl z-50 py-1 font-sans">
+<button class="flex items-center gap-3 px-4 py-2 bg-background border border-white/10 hover:border-accent/40 transition-all" onclick="this.nextElementSibling?.classList?.toggle('hidden')"><span class="text-[10px] font-sans font-semibold text-white/40 uppercase tracking-[0.15em]">Last Visit</span><div class="h-3 w-[1px] bg-white/10"></div><span id="filter-last-visit" class="text-[10px] font-sans font-medium text-white/60">Anytime</span><span class="material-symbols-outlined text-sm text-accent/50 group-hover:text-accent" data-icon="expand_more">expand_more</span></button><div class="hidden absolute top-full left-0 mt-1 w-48 bg-surface border border-white/10 shadow-xl z-50 py-1 font-sans">
 <div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">Anytime</div>
 <div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">Last 7 Days</div>
 <div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">Last 30 Days</div>
 </div>
 </div>
 <div class="group relative">
-<button class="flex items-center gap-3 px-4 py-2 bg-background border border-white/10 hover:border-accent/40 transition-all" onclick="this.nextElementSibling?.classList?.toggle('hidden')"><span class="text-[10px] font-sans font-semibold text-white/40 uppercase tracking-[0.15em]">Spend</span><div class="h-3 w-[1px] bg-white/10"></div><span class="text-[10px] font-sans font-medium text-white/60">Any Amount</span><span class="material-symbols-outlined text-sm text-accent/50 group-hover:text-accent" data-icon="expand_more">expand_more</span></button><div class="hidden absolute top-full left-0 mt-1 w-48 bg-surface border border-white/10 shadow-xl z-50 py-1 font-sans">
+<button class="flex items-center gap-3 px-4 py-2 bg-background border border-white/10 hover:border-accent/40 transition-all" onclick="this.nextElementSibling?.classList?.toggle('hidden')"><span class="text-[10px] font-sans font-semibold text-white/40 uppercase tracking-[0.15em]">Spend</span><div class="h-3 w-[1px] bg-white/10"></div><span id="filter-spend" class="text-[10px] font-sans font-medium text-white/60">Any Amount</span><span class="material-symbols-outlined text-sm text-accent/50 group-hover:text-accent" data-icon="expand_more">expand_more</span></button><div class="hidden absolute top-full left-0 mt-1 w-48 bg-surface border border-white/10 shadow-xl z-50 py-1 font-sans">
 <div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">Any Amount</div>
 <div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">$500+</div>
 <div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">$1k+</div>
 </div>
 </div>
 <div class="group relative">
-<button class="flex items-center gap-3 px-4 py-2 bg-background border border-white/10 hover:border-accent/40 transition-all" onclick="this.nextElementSibling?.classList?.toggle('hidden')"><span class="text-[10px] font-sans font-semibold text-white/40 uppercase tracking-[0.15em]">Complaint</span><div class="h-3 w-[1px] bg-white/10"></div><span class="text-[10px] font-sans font-medium text-white/60">All</span><span class="material-symbols-outlined text-sm text-accent/50 group-hover:text-accent" data-icon="expand_more">expand_more</span></button><div class="hidden absolute top-full left-0 mt-1 w-48 bg-surface border border-white/10 shadow-xl z-50 py-1 font-sans">
+<button class="flex items-center gap-3 px-4 py-2 bg-background border border-white/10 hover:border-accent/40 transition-all" onclick="this.nextElementSibling?.classList?.toggle('hidden')"><span class="text-[10px] font-sans font-semibold text-white/40 uppercase tracking-[0.15em]">Complaint</span><div class="h-3 w-[1px] bg-white/10"></div><span id="filter-complaint" class="text-[10px] font-sans font-medium text-white/60">All</span><span class="material-symbols-outlined text-sm text-accent/50 group-hover:text-accent" data-icon="expand_more">expand_more</span></button><div class="hidden absolute top-full left-0 mt-1 w-48 bg-surface border border-white/10 shadow-xl z-50 py-1 font-sans">
 <div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">All</div>
 <div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">No</div>
 <div class="px-4 py-2 text-[10px] text-white/60 hover:bg-white/5 cursor-pointer" onclick="this.parentElement.previousElementSibling.querySelector('span:nth-child(3)').innerText = this.innerText; this.parentElement.classList.add('hidden')">Yes</div>
@@ -166,7 +166,7 @@
 <button class="flex items-center gap-3 px-4 py-2 bg-background border border-white/10 hover:border-accent/40 transition-all" onclick="this.nextElementSibling?.classList?.toggle('hidden')">
 <span class="text-[10px] font-sans font-semibold text-white/40 uppercase tracking-[0.15em]">Guest Type</span>
 <div class="h-3 w-[1px] bg-white/10"></div>
-<span class="text-[10px] font-sans font-medium text-white/60">All Types</span>
+<span id="filter-guest-type" class="text-[10px] font-sans font-medium text-white/60">All Types</span>
 <span class="material-symbols-outlined text-sm text-accent/50 group-hover:text-accent" data-icon="expand_more">expand_more</span>
 </button>
 <div class="hidden absolute top-full left-0 mt-1 w-48 bg-surface border border-white/10 shadow-xl z-50 py-1 font-sans">
@@ -181,7 +181,7 @@
 <button class="flex items-center gap-3 px-4 py-2 bg-background border border-white/10 hover:border-accent/40 transition-all" onclick="this.nextElementSibling?.classList?.toggle('hidden')">
 <span class="text-[10px] font-sans font-semibold text-white/40 uppercase tracking-[0.15em]">Send Limit</span>
 <div class="h-3 w-[1px] bg-white/10"></div>
-<span class="text-[10px] font-sans font-medium text-white/60">No Limit</span>
+<span id="filter-send-limit" class="text-[10px] font-sans font-medium text-white/60">No Limit</span>
 <span class="material-symbols-outlined text-sm text-accent/50 group-hover:text-accent" data-icon="expand_more">expand_more</span>
 </button>
 <div class="hidden absolute top-full left-0 mt-1 w-48 bg-surface border border-white/10 shadow-xl z-50 py-1 font-sans">
@@ -196,7 +196,7 @@
 <button class="flex items-center gap-3 px-4 py-2 bg-background border border-white/10 hover:border-accent/40 transition-all" onclick="this.nextElementSibling?.classList?.toggle('hidden')">
 <span class="text-[10px] font-sans font-semibold text-white/40 uppercase tracking-[0.15em]">Campaign Type</span>
 <div class="h-3 w-[1px] bg-white/10"></div>
-<span class="text-[10px] font-sans font-medium text-white/60">All</span>
+<span id="filter-campaign-type" class="text-[10px] font-sans font-medium text-white/60">All</span>
 <span class="material-symbols-outlined text-sm text-accent/50 group-hover:text-accent" data-icon="expand_more">expand_more</span>
 </button>
 <div class="hidden absolute top-full left-0 mt-1 w-48 bg-surface border border-white/10 shadow-xl z-50 py-1 font-sans">
@@ -221,55 +221,11 @@
 <!-- Left: Guest List (Col-3) -->
 <div class="col-span-12 lg:col-span-3 flex flex-col gap-6">
 <div class="flex items-center justify-between px-1">
-<h2 class="font-serif text-[11px] font-bold uppercase tracking-[0.2em] text-white/60">47 Guests Matched</h2>
+<h2 id="guest-count-label" class="font-serif text-[11px] font-bold uppercase tracking-[0.2em] text-white/60">— Guests Matched</h2>
 <span class="material-symbols-outlined text-white/30 cursor-pointer text-lg" data-icon="sort">sort</span>
 </div>
-<div class="space-y-4 overflow-y-auto max-h-[600px] pr-2 custom-scrollbar">
-<!-- Active Card -->
-<div class="bg-surface-lighter p-5 border-l-[3px] border-accent soft-shadow hairline-border cursor-pointer transition-all">
-<div class="flex justify-between items-start mb-3">
-<h3 class="font-serif text-sm font-semibold text-white">Sarah Mitchell</h3>
-<span class="text-accent text-[9px] font-bold px-2 py-1 bg-accent/10 tracking-[0.1em] uppercase">VIP</span>
-</div>
-<div class="space-y-2">
-<p class="text-[10px] font-sans text-white/50 flex items-center gap-2">
-<span class="material-symbols-outlined text-xs" data-icon="local_activity">local_activity</span> Spend: $1,250
-                                </p>
-<p class="text-[10px] font-sans text-accent-light font-medium flex items-center gap-2">
-<span class="material-symbols-outlined text-xs" data-icon="star">star</span> Strategy: Anniversary Gift
-                                </p>
-</div>
-</div>
-<!-- Card 2 -->
-<div class="bg-surface p-5 hairline-border border-white/5 hover:bg-surface-lighter transition-all cursor-pointer">
-<div class="flex justify-between items-start mb-3">
-<h3 class="font-serif text-sm font-semibold text-white/70">James Henderson</h3>
-<span class="text-white/30 text-[9px] font-bold px-2 py-1 bg-white/5 tracking-[0.1em] uppercase">Recurring</span>
-</div>
-<div class="space-y-2">
-<p class="text-[10px] font-sans text-white/40 flex items-center gap-2">
-<span class="material-symbols-outlined text-xs" data-icon="local_activity">local_activity</span> Spend: $840
-                                </p>
-<p class="text-[10px] font-sans text-white/40 flex items-center gap-2">
-<span class="material-symbols-outlined text-xs" data-icon="upgrade">upgrade</span> Strategy: Suite Upgrade
-                                </p>
-</div>
-</div>
-<!-- Card 3 -->
-<div class="bg-surface p-5 hairline-border border-white/5 hover:bg-surface-lighter transition-all cursor-pointer">
-<div class="flex justify-between items-start mb-3">
-<h3 class="font-serif text-sm font-semibold text-white/70">Elena Rodriguez</h3>
-<span class="text-error text-[9px] font-bold px-2 py-1 bg-error/10 tracking-[0.1em] uppercase">Recovery</span>
-</div>
-<div class="space-y-2">
-<p class="text-[10px] font-sans text-white/40 flex items-center gap-2">
-<span class="material-symbols-outlined text-xs" data-icon="local_activity">local_activity</span> Spend: $2,100
-                                </p>
-<p class="text-[10px] font-sans text-white/40 flex items-center gap-2">
-<span class="material-symbols-outlined text-xs" data-icon="assignment_return">assignment_return</span> Strategy: Apology &amp; Credit
-                                </p>
-</div>
-</div>
+<div id="guest-list-container" class="space-y-4 overflow-y-auto max-h-[600px] pr-2 custom-scrollbar">
+<p id="guest-list-placeholder" class="text-white/40 text-xs font-sans px-2">Run a campaign to load guests from <span class="text-accent/80">demo_guests</span> (Ollama).</p>
 </div>
 </div>
 <!-- Center: Agent Reasoning Panel (Col-5) -->
@@ -282,46 +238,18 @@
 </div>
 <div>
 <h2 class="font-serif text-lg font-semibold text-white">Agent Reasoning</h2>
-<p class="text-[10px] uppercase tracking-widest text-white/30 font-sans mt-0.5">Guest ID: 8842 • Sarah Mitchell</p>
+<p id="agent-reasoning-subtitle" class="text-[10px] uppercase tracking-widest text-white/30 font-sans mt-0.5">Awaiting run</p>
 </div>
 </div>
 <span class="material-symbols-outlined text-white/20" data-icon="more_vert">more_vert</span>
 </div>
-<div class="flex-1 p-8 space-y-8 relative overflow-y-auto custom-scrollbar">
-<div class="space-y-6">
-<h3 class="text-[10px] font-bold uppercase tracking-[0.2em] text-accent/60">Signal Analysis</h3>
-<div class="grid grid-cols-2 gap-6">
-<div class="p-4 bg-background border border-white/5">
-<p class="text-[9px] font-bold text-accent uppercase tracking-wider mb-2">Loyalty Context</p>
-<p class="text-xs font-serif italic text-white/80">High Lifetime Spend • Tier 1</p>
+<div id="agent-reasoning-log" class="flex-1 p-8 space-y-3 relative overflow-y-auto custom-scrollbar min-h-[320px] text-[13px] text-white/70 leading-relaxed">
+<p class="text-white/40 text-xs">Click <span class="text-accent">Run Campaign</span> to stream steps (SSE + Ollama).</p>
 </div>
-<div class="p-4 bg-background border border-white/5">
-<p class="text-[9px] font-bold text-accent uppercase tracking-wider mb-2">Temporal Trigger</p>
-<p class="text-xs font-serif italic text-white/80">Anniversary Cycle Detected</p>
-</div>
-</div>
-<ul class="space-y-4">
-<li class="flex items-start gap-4">
-<span class="material-symbols-outlined text-accent text-lg mt-0.5" data-icon="done">done</span>
-<p class="text-[13px] text-white/70 leading-relaxed">Top 5% of restaurant patrons over trailing 36 months.</p>
-</li>
-<li class="flex items-start gap-4">
-<span class="material-symbols-outlined text-white/20 text-lg mt-0.5" data-icon="history">history</span>
-<p class="text-[13px] text-white/70 leading-relaxed">Minor friction identified in Q2 2024: Valet service delay (15 min).</p>
-</li>
-<li class="flex items-start gap-4">
-<span class="material-symbols-outlined text-accent text-lg mt-0.5" data-icon="lightbulb">lightbulb</span>
-<p class="text-[13px] text-white/70 leading-relaxed">Model predicts <span class="text-accent font-semibold">+42% LTV uplift</span> with personalized Spa engagement.</p>
-</li>
-</ul>
-</div>
-<div class="mt-auto pt-8">
-<div class="border-t border-white/5 pt-8">
+<div id="strategy-summary-box" class="hidden border-t border-white/5 p-8 pt-6">
 <div class="bg-primary p-6 border-l-2 border-accent">
 <p class="text-[9px] font-bold text-accent uppercase tracking-[0.2em] mb-2">Calculated Strategy</p>
-<p class="text-xl font-serif text-white">Re-engagement with Premium Spa Sanctuary Credit</p>
-</div>
-</div>
+<p id="strategy-summary-text" class="text-xl font-serif text-white"></p>
 </div>
 </div>
 </div>
@@ -340,18 +268,11 @@
 <div class="flex-1 p-8 overflow-y-auto custom-scrollbar">
 <div class="max-w-md mx-auto">
 <div class="mb-8 pb-4 border-b border-white/5 text-[11px] font-sans space-y-1">
-<p class="text-white/30">Recipient: <span class="text-white/80">sarah.mitchell@outlook.com</span></p>
-<p class="text-white/30">Subject: <span class="text-accent font-serif italic">Celebrating Your Upcoming Milestone at The Grand Reserve</span></p>
+<p class="text-white/30">Recipient: <span id="email-preview-recipient" class="text-white/80">—</span></p>
+<p class="text-white/30">Subject: <span id="email-preview-subject" class="text-accent font-serif italic">Awaiting generation…</span></p>
 </div>
-<div class="font-serif text-sm leading-relaxed text-white/70 space-y-6">
-<div class="aspect-[16/9] bg-background mb-8 overflow-hidden">
-<img alt="luxury hotel spa interior" class="w-full h-full object-cover grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5xlLGrvcDnw94h04IVQCoY8AHxNTHY0cpgLK--hvEmt5UTsjWu1AVecf707jpww8f6fxuTvgxbGXJCHrFJtdkj3vnEzN6LYc2VnY69-swSC9Ru1pX1KY1IRoi3oS0bYyJE8dT8DttWYCTIrwj8wB30fCmTf79QmuLXH0l5485lt8ZFcqmZt6sWeFXT4ez_H2c0xp17dZrgr5lWYvLUZbo4J8rpptCsU3KfkmpHbS25_MBWb9krS7lcFcdXROKIRObxXWYSoQK9sc"/>
-</div>
-<p>Dear Ms. Mitchell,</p>
-<p>As your anniversary approaches, we wish to extend our warmest regards and gratitude for your continued patronage of The Grand Reserve.</p>
-<p>In recognition of your upcoming celebration, we have reserved a <span class="text-accent font-semibold">$150 Spa Sanctuary credit</span> within your private account.</p>
-<p>We look forward to curating another exceptional stay for you soon.</p>
-<p class="pt-4 font-semibold text-white">The Concierge Team<br/><span class="text-[10px] uppercase tracking-widest font-sans opacity-30">Retain AI Platform</span></p>
+<div id="email-preview-body" class="font-serif text-sm leading-relaxed text-white/70 space-y-4 whitespace-pre-wrap">
+<p class="text-white/40 text-xs">Email preview updates as each guest is processed.</p>
 </div>
 </div>
 </div>
@@ -371,19 +292,230 @@
 <div class="flex -space-x-1.5">
 <img class="w-7 h-7 border-2 border-primary object-cover grayscale opacity-70" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqre1T1tSArHH6jX2XCj2k5FbwVX3gdC_8eFPu6HXthRYL_JkF8lOSOycf4eKRQ_39CtbrAADLYuQUNR6bR5eyabTarwNCgDz7E15bYFLYUW1pANfsbWDBzhkQqUc96mKK6X4S0zOTotgKH3M7RckaJF7vSXTHzXQe22Pp0ZNjMFHpvbqHNMPQ1YP_rYFQ0JzSgzSSY7R_bju5Fa8lT3Y-DsoZLQJoLtpSQYuxlmirymQouoZIgvkeRG6hbgA3eX8d2Q-eScj7OEQ"/>
 <img class="w-7 h-7 border-2 border-primary object-cover grayscale opacity-70" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZlw8a8iBLM4GG6AxatCz1UdMIr6Pf_HNLYTRo0c5IJcU0-rRDmUwY5Y_qGEtiSMW6iGoWlK1nBdyRRx-OsdA606bEH2YjwzROa3p3HnHz2qVME_XMlZCSln7akaG_wsWRE4mDaj0J1XPBJuliWPq5U0XeTQ8TK2scpBYVjh9ugpUqmGlfXxvlck_tqCpsSV_7jIm_8Ewo1f5Chi5NsNbf2YwC4rMNtfp5Lots8wmDUqiWH8aGy4qBfUnRgXQ9TZV2wv8p3qOVat4"/>
-<div class="w-7 h-7 border-2 border-primary bg-surface flex items-center justify-center text-[9px] font-bold text-accent">+45</div>
+<div id="footer-avatar-count" class="w-7 h-7 border-2 border-primary bg-surface flex items-center justify-center text-[9px] font-bold text-accent">—</div>
 </div>
-<p class="text-[11px] font-sans text-white/50 tracking-wide">47 elite guests curated for this campaign.</p>
+<p id="footer-campaign-summary" class="text-[11px] font-sans text-white/50 tracking-wide">Run a campaign to see cohort size.</p>
 </div>
 <div class="flex gap-6">
 <button class="px-6 py-3 text-[10px] font-bold text-white/70 uppercase tracking-[0.15em] border border-white/10 hover:bg-white/5 transition-all">
                     Schedule Batch
                 </button>
-<button class="px-10 py-3 text-[10px] font-bold bg-accent text-primary uppercase tracking-[0.15em] hover:bg-accent-light transition-all flex items-center gap-3">
-<span>Execute Campaign (All 47)</span>
+<button id="footer-execute-btn" type="button" class="px-10 py-3 text-[10px] font-bold bg-accent text-primary uppercase tracking-[0.15em] hover:bg-accent-light transition-all flex items-center gap-3">
+<span id="footer-execute-label">Execute Campaign</span>
 <span class="material-symbols-outlined text-sm" data-icon="auto_awesome">auto_awesome</span>
 </button>
 </div>
 </footer>
 </main>
+<script>
+(function () {
+  var RUN_CAMPAIGN_URL = "{% url 'stream_campaign' %}";
+  var runBtn = document.getElementById("run-campaign-btn");
+  var footerRun = document.getElementById("footer-execute-btn");
+  var queryInput = document.getElementById("campaign-query");
+  var logEl = document.getElementById("agent-reasoning-log");
+  var subtitleEl = document.getElementById("agent-reasoning-subtitle");
+  var guestContainer = document.getElementById("guest-list-container");
+  var guestPlaceholder = document.getElementById("guest-list-placeholder");
+  var guestCountLabel = document.getElementById("guest-count-label");
+  var emailRecipient = document.getElementById("email-preview-recipient");
+  var emailSubject = document.getElementById("email-preview-subject");
+  var emailBody = document.getElementById("email-preview-body");
+  var strategyBox = document.getElementById("strategy-summary-box");
+  var strategyText = document.getElementById("strategy-summary-text");
+  var footerSummary = document.getElementById("footer-campaign-summary");
+  var footerCount = document.getElementById("footer-avatar-count");
+  var footerExecuteLabel = document.getElementById("footer-execute-label");
+  var activeSource = null;
+  var lastStrategyLabel = "";
+
+  function collectFilters() {
+    function g(id) {
+      var el = document.getElementById(id);
+      return el ? el.textContent.trim() : "";
+    }
+    return {
+      last_visit: g("filter-last-visit"),
+      spend: g("filter-spend"),
+      complaint: g("filter-complaint"),
+      guest_type: g("filter-guest-type"),
+      send_limit: g("filter-send-limit"),
+      campaign_type: g("filter-campaign-type"),
+    };
+  }
+
+  function appendLog(message) {
+    var row = document.createElement("div");
+    row.className = "flex gap-3 border-b border-white/5 pb-2";
+    row.innerHTML =
+      '<span class="material-symbols-outlined text-accent text-base shrink-0">neurology</span>' +
+      '<p class="text-[13px] text-white/75 leading-relaxed"></p>';
+    row.lastChild.textContent = message;
+    logEl.appendChild(row);
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+
+  function badgeClassForGuestType(gt) {
+    if (gt === "VIP") return "text-accent text-[9px] font-bold px-2 py-1 bg-accent/10 tracking-[0.1em] uppercase";
+    if (gt === "Recovery") return "text-error text-[9px] font-bold px-2 py-1 bg-error/10 tracking-[0.1em] uppercase";
+    return "text-white/30 text-[9px] font-bold px-2 py-1 bg-white/5 tracking-[0.1em] uppercase";
+  }
+
+  function renderGuestCards(guests, strategyLabel) {
+    var strat = strategyLabel || "—";
+    if (guestPlaceholder) guestPlaceholder.remove();
+    guestContainer.innerHTML = "";
+    guests.forEach(function (g, idx) {
+      var name = g.name || "Guest";
+      var spend = g.total_spend != null ? Number(g.total_spend).toLocaleString() : "—";
+      var gt = g.guest_type || "Guest";
+      var active =
+        idx === 0
+          ? "bg-surface-lighter border-l-[3px] border-accent soft-shadow"
+          : "bg-surface hairline-border border-white/5";
+      var card = document.createElement("div");
+      card.className = active + " p-5 cursor-pointer transition-all guest-card";
+      card.innerHTML =
+        '<div class="flex justify-between items-start mb-3">' +
+        '<h3 class="font-serif text-sm font-semibold text-white">' +
+        name +
+        "</h3>" +
+        '<span class="' +
+        badgeClassForGuestType(gt) +
+        '">' +
+        gt +
+        "</span></div>" +
+        '<div class="space-y-2">' +
+        '<p class="text-[10px] font-sans text-white/50 flex items-center gap-2">' +
+        '<span class="material-symbols-outlined text-xs">local_activity</span> Spend: $' +
+        spend +
+        "</p>" +
+        '<p class="text-[10px] font-sans text-accent-light/90 font-medium flex items-center gap-2 guest-card-strategy">' +
+        '<span class="material-symbols-outlined text-xs">star</span> Strategy: ' +
+        strat +
+        "</p></div>";
+      guestContainer.appendChild(card);
+    });
+  }
+
+  function updateGuestStrategies(strategyLabel) {
+    lastStrategyLabel = strategyLabel;
+    guestContainer.querySelectorAll(".guest-card-strategy").forEach(function (el) {
+      el.innerHTML =
+        '<span class="material-symbols-outlined text-xs">star</span> Strategy: ' + strategyLabel;
+    });
+  }
+
+  function applyEmailPreview(email) {
+    emailRecipient.textContent = email.email || "—";
+    emailSubject.textContent = email.subject || "—";
+    emailBody.textContent = email.body || "";
+  }
+
+  function setRunning(running) {
+    runBtn.disabled = running;
+    footerRun.disabled = running;
+    runBtn.classList.toggle("opacity-50", running);
+    footerRun.classList.toggle("opacity-50", running);
+  }
+
+  function runCampaign() {
+    var query = queryInput.value.trim();
+    if (!query) {
+      appendLog("Please enter a campaign query.");
+      return;
+    }
+    if (activeSource) {
+      activeSource.close();
+      activeSource = null;
+    }
+    subtitleEl.textContent = "Streaming…";
+    logEl.innerHTML = "";
+    strategyBox.classList.add("hidden");
+    setRunning(true);
+    footerExecuteLabel.textContent = "Running…";
+
+    // encodeURIComponent avoids '+' / spaces corrupting JSON in query string
+    var streamUrl =
+      RUN_CAMPAIGN_URL +
+      "?query=" +
+      encodeURIComponent(query) +
+      "&filters=" +
+      encodeURIComponent(JSON.stringify(collectFilters())) +
+      "&max_emails=15";
+    var source = new EventSource(streamUrl);
+    activeSource = source;
+
+    source.onmessage = function (ev) {
+      if (ev.data == null || ev.data === "") {
+        return;
+      }
+      var raw = String(ev.data).trim();
+      var payload;
+      try {
+        payload = JSON.parse(raw);
+      } catch (e) {
+        console.error("[Retain SSE] JSON.parse failed", e, raw.substring(0, 400));
+        appendLog("Parse error — check browser console. Snippet: " + raw.substring(0, 120));
+        return;
+      }
+      if (!payload || !payload.type) {
+        return;
+      }
+      if (payload.type === "log") {
+        appendLog(payload.message);
+        if (payload.data && payload.data.strategy) {
+          var s = payload.data.strategy;
+          var label = s.strategy || "";
+          strategyText.textContent = label;
+          strategyBox.classList.remove("hidden");
+          updateGuestStrategies(label);
+          subtitleEl.textContent = "Strategy: " + label;
+        }
+        return;
+      }
+      if (payload.type === "guests") {
+        var n = payload.count || 0;
+        var guests = payload.guests || [];
+        guestCountLabel.textContent = n + " Guests Matched";
+        footerSummary.textContent = n + " guests in cohort (demo_guests).";
+        footerCount.textContent = n > 99 ? "99+" : String(n);
+        appendLog("📋 Showing " + guests.length + " guest cards (matched: " + n + ").");
+        renderGuestCards(guests, lastStrategyLabel);
+        return;
+      }
+      if (payload.type === "email_preview") {
+        var gname =
+          payload.guest && payload.guest.name ? payload.guest.name : "Guest";
+        subtitleEl.textContent = "Preview: " + gname;
+        applyEmailPreview(payload.email || {});
+        return;
+      }
+      if (payload.type === "error") {
+        appendLog("Error: " + (payload.message || "unknown"));
+        source.close();
+        setRunning(false);
+        footerExecuteLabel.textContent = "Execute Campaign";
+        return;
+      }
+      if (payload.type === "done") {
+        subtitleEl.textContent = "Complete";
+        source.close();
+        setRunning(false);
+        footerExecuteLabel.textContent = "Execute Campaign";
+        return;
+      }
+    };
+
+    source.onerror = function () {
+      source.close();
+      setRunning(false);
+      footerExecuteLabel.textContent = "Execute Campaign";
+    };
+  }
+
+  runBtn.addEventListener("click", runCampaign);
+  footerRun.addEventListener("click", runCampaign);
+})();
+</script>
 </body></html>
