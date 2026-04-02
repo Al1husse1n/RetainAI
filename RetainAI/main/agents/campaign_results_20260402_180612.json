@@ -1,0 +1,37 @@
+{
+  "status": "success",
+  "guests_targeted": 2,
+  "emails_sent": 2,
+  "strategy": {
+    "strategy": "VIP Win-back",
+    "tone": "Exclusive & Luxurious",
+    "key_message": "You're one of our most valued guests",
+    "call_to_action": "Claim your exclusive offer",
+    "avg_spend": 17283.0,
+    "avg_days_since_visit": 3279.0,
+    "vip_percentage": 0.0
+  },
+  "filters_used": {
+    "min_days_since_last_visit": 365,
+    "max_days_since_last_visit": null,
+    "min_spend": 1500.0,
+    "max_spend": null,
+    "guest_types": null,
+    "had_complaint": null,
+    "send_limit": 10
+  },
+  "generated_emails": [
+    {
+      "to": "yafetman44@gmail.com",
+      "subject": "We miss you, Yafet! It's been 5433 days...",
+      "body": "Dear Yafet Getachew,\n\nIt's been 5433 days since your last stay with us. We remember you celebrated your nan with us.\n\nYou're one of our most valued guests.\n\nAs a Regular guest who has spent $22,233.00 with us, we're offering you a special 25% discount on your next stay. Your preferred deluxe room is ready for you. Our nan team can't wait to welcome you back.\n\nClaim your exclusive offer\n\nWarm regards,\nLuxury Hotel Team\n\nP.S. This exclusive offer is available for a limited time. Don't miss out!",
+      "guest_name": "Yafet Getachew"
+    },
+    {
+      "to": "alihusseinali1284@gmail.com",
+      "subject": "We miss you, Ali! It's been 1125 days...",
+      "body": "Dear Ali Hussein,\n\nIt's been 1125 days since your last stay with us. We remember you celebrated your nan with us.\n\nWe sincerely apologize for your previous experience and You're one of our most valued guests.\n\nAs a Regular guest who has spent $12,333.00 with us, we're offering you have added an extra a special 25% discount on your next stay as a gesture of goodwill. Your preferred standard room is ready for you. Our nan team can't wait to welcome you back.\n\nClaim your exclusive offer\n\nWarm regards,\nLuxury Hotel Team\n\nP.S. This exclusive offer is available for a limited time. Don't miss out!",
+      "guest_name": "Ali Hussein"
+    }
+  ]
+}

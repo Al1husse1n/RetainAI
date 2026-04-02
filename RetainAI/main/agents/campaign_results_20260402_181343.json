@@ -1,0 +1,67 @@
+{
+  "status": "success",
+  "guests_targeted": 7,
+  "emails_sent": 7,
+  "strategy": {
+    "strategy": "VIP Win-back",
+    "tone": "Exclusive & Luxurious",
+    "key_message": "You're one of our most valued guests",
+    "call_to_action": "Claim your exclusive offer",
+    "avg_spend": 4258.285714285715,
+    "avg_days_since_visit": 41.42857142857143,
+    "vip_percentage": 0.0
+  },
+  "filters_used": {
+    "min_days_since_last_visit": null,
+    "max_days_since_last_visit": 60,
+    "min_spend": null,
+    "max_spend": null,
+    "guest_types": null,
+    "had_complaint": null,
+    "send_limit": 7
+  },
+  "generated_emails": [
+    {
+      "to": "cpeterson@example.com",
+      "subject": "Welcome back to Luxury, Catherine",
+      "body": "Dear Catherine Jackson,\n\nIt's been 49 days since your last stay with us. We remember you celebrated your anniversary with us.\n\nYou're one of our most valued guests.\n\nAs a Regular guest who has spent $4,795.00 with us, we're offering you a special 25% discount on your next stay. Your preferred standard room is ready for you. Our dinner team can't wait to welcome you back.\n\nClaim your exclusive offer\n\nWarm regards,\nLuxury Hotel Team\n\nP.S. This exclusive offer is available for a limited time. Don't miss out!",
+      "guest_name": "Catherine Jackson"
+    },
+    {
+      "to": "christopherhodge@example.net",
+      "subject": "Welcome back to Luxury, James",
+      "body": "Dear James Rosario,\n\nIt's been 57 days since your last stay with us. We remember you celebrated your nan with us.\n\nWe sincerely apologize for your previous experience and You're one of our most valued guests.\n\nAs a Regular guest who has spent $4,759.00 with us, we're offering you have added an extra a special 25% discount on your next stay as a gesture of goodwill. Your preferred ocean view room is ready for you. Our nan team can't wait to welcome you back.\n\nClaim your exclusive offer\n\nWarm regards,\nLuxury Hotel Team\n\nP.S. This exclusive offer is available for a limited time. Don't miss out!",
+      "guest_name": "James Rosario"
+    },
+    {
+      "to": "johnsonheidi@example.org",
+      "subject": "Welcome back to Luxury, Jonathan",
+      "body": "Dear Jonathan Collins,\n\nIt's been 26 days since your last stay with us. We remember you celebrated your nan with us.\n\nWe sincerely apologize for your previous experience and You're one of our most valued guests.\n\nAs a Regular guest who has spent $4,475.00 with us, we're offering you have added an extra a special 25% discount on your next stay as a gesture of goodwill. Your preferred deluxe room is ready for you. Our gym team can't wait to welcome you back.\n\nClaim your exclusive offer\n\nWarm regards,\nLuxury Hotel Team\n\nP.S. This exclusive offer is available for a limited time. Don't miss out!",
+      "guest_name": "Jonathan Collins"
+    },
+    {
+      "to": "jason48@example.com",
+      "subject": "Welcome back to Luxury, Keith",
+      "body": "Dear Keith Moore,\n\nIt's been 58 days since your last stay with us. We remember you celebrated your birthday with us.\n\nWe sincerely apologize for your previous experience and You're one of our most valued guests.\n\nAs a Regular guest who has spent $4,242.00 with us, we're offering you have added an extra a special 25% discount on your next stay as a gesture of goodwill. Your preferred deluxe room is ready for you. Our spa team can't wait to welcome you back.\n\nClaim your exclusive offer\n\nWarm regards,\nLuxury Hotel Team\n\nP.S. This exclusive offer is available for a limited time. Don't miss out!",
+      "guest_name": "Keith Moore"
+    },
+    {
+      "to": "eguzman@example.org",
+      "subject": "Welcome back to Luxury, James",
+      "body": "Dear James Walters,\n\nIt's been 58 days since your last stay with us. We remember you celebrated your birthday with us.\n\nWe sincerely apologize for your previous experience and You're one of our most valued guests.\n\nAs a Regular guest who has spent $3,885.00 with us, we're offering you have added an extra a special 25% discount on your next stay as a gesture of goodwill. Your preferred standard room is ready for you. Our pool team can't wait to welcome you back.\n\nClaim your exclusive offer\n\nWarm regards,\nLuxury Hotel Team\n\nP.S. This exclusive offer is available for a limited time. Don't miss out!",
+      "guest_name": "James Walters"
+    },
+    {
+      "to": "marygraham@example.org",
+      "subject": "Welcome back to Luxury, Jason",
+      "body": "Dear Jason Baker,\n\nIt's been 23 days since your last stay with us. We remember you celebrated your nan with us.\n\nWe sincerely apologize for your previous experience and You're one of our most valued guests.\n\nAs a Regular guest who has spent $3,850.00 with us, we're offering you have added an extra a special 25% discount on your next stay as a gesture of goodwill. Your preferred standard room is ready for you. Our nan team can't wait to welcome you back.\n\nClaim your exclusive offer\n\nWarm regards,\nLuxury Hotel Team\n\nP.S. This exclusive offer is available for a limited time. Don't miss out!",
+      "guest_name": "Jason Baker"
+    },
+    {
+      "to": "lanecarlos@example.net",
+      "subject": "Welcome back to Luxury, Jeremy",
+      "body": "Dear Jeremy Lloyd,\n\nIt's been 19 days since your last stay with us. We remember you celebrated your anniversary with us.\n\nYou're one of our most valued guests.\n\nAs a Regular guest who has spent $3,802.00 with us, we're offering you a special 25% discount on your next stay. Your preferred ocean view room is ready for you. Our gym team can't wait to welcome you back.\n\nClaim your exclusive offer\n\nWarm regards,\nLuxury Hotel Team\n\nP.S. This exclusive offer is available for a limited time. Don't miss out!",
+      "guest_name": "Jeremy Lloyd"
+    }
+  ]
+}
