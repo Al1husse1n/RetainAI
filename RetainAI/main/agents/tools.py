@@ -40,6 +40,30 @@ def get_llm() -> ChatOllama:
     return _llm
 
 
+def _infer_name_query_from_campaign(text: str) -> Optional[str]:
+    """If the LLM omits name filters, recover a substring from common phrasings."""
+    if not (text or "").strip():
+        return None
+    t = text.strip()
+    patterns = (
+        r"\bnamed\s+([A-Za-z][A-Za-z\-'.]+)",
+        r"\bname\s+is\s+([A-Za-z][A-Za-z\-'.]+)",
+        r"\bfind\s+(?:a\s+)?(?:guest\s+)?(?:named\s+)?([A-Za-z][A-Za-z\-'.]+)\b",
+        r"\bfor\s+guest\s+([A-Za-z][A-Za-z\-'.]+)\b",
+        r"\btell\s+([A-Za-z][A-Za-z\-'.]+)\b",
+    )
+    for pat in patterns:
+        m = re.search(pat, t, re.IGNORECASE)
+        if m:
+            w = m.group(1).strip()
+            # Skip common English words that match "tell X"
+            if w.lower() in {"him", "her", "them", "everyone", "all", "guest", "guests"}:
+                continue
+            if len(w) >= 2:
+                return w
+    return None
+
+
 def extract_json_from_response(response_text: str) -> dict:
     """Parse JSON from small models (strip fences, grab first object)."""
     text = (response_text or "").strip()
@@ -92,6 +116,13 @@ def load_guests() -> pd.DataFrame:
 # ----- tools -----
 
 
+def _coerce_name_filter_value(raw: Any) -> Optional[str]:
+    if raw is None:
+        return None
+    s = str(raw).strip()
+    return s if s else None
+
+
 @tool
 def extract_guest_filters(campaign_description: str) -> Dict[str, Any]:
     """Use Ollama to turn natural language into filter JSON."""
@@ -104,13 +135,27 @@ Return ONLY a JSON object with any of these keys (omit unknowns, use null):
 - min_spend, max_spend (numbers)
 - guest_types (array of strings, e.g. ["VIP"])
 - min_complaint_count, max_complaint_count (ints)
-- send_limit (int)
+- send_limit (int): cap cohort size after other filters; sort by total_spend descending when applied
+- name_contains (string): substring match on guest full name (case-insensitive), e.g. "Ali" or "Hussein"
 No markdown, JSON only."""
 
     try:
         r = get_llm().invoke(prompt)
         content = r.content if hasattr(r, "content") else str(r)
         out = extract_json_from_response(str(content))
+        # Normalize alternate keys small models sometimes emit
+        for alias, key in (
+            ("guest_name", "name_contains"),
+            ("name", "name_contains"),
+            ("name_query", "name_contains"),
+        ):
+            if alias in out and out.get(alias) and not out.get("name_contains"):
+                out["name_contains"] = out.pop(alias, None)
+        nc = _coerce_name_filter_value(out.get("name_contains"))
+        if nc:
+            out["name_contains"] = nc
+        elif "name_contains" in out:
+            out.pop("name_contains", None)
         # Coerce numerics
         for k in (
             "min_days_since_last_visit",
@@ -130,9 +175,14 @@ No markdown, JSON only."""
                     out[k] = float(out[k])
                 except (TypeError, ValueError):
                     del out[k]
+        if not out.get("name_contains"):
+            inferred = _infer_name_query_from_campaign(campaign_description)
+            if inferred:
+                out["name_contains"] = inferred
         return out
     except Exception:
-        return {}
+        inferred = _infer_name_query_from_campaign(campaign_description)
+        return {"name_contains": inferred} if inferred else {}
 
 
 @tool
@@ -170,17 +220,61 @@ def filter_guests(filters: Dict[str, Any]) -> List[Dict[str, Any]]:
         df = df[df["complaint_count"] >= int(f["min_complaint_count"])]
     if f.get("guest_types"):
         df = df[df["guest_type"].isin(list(f["guest_types"]))]
+    name_q = _coerce_name_filter_value(f.get("name_contains"))
+    if name_q:
+        col = df["name"].astype(str)
+        mask = col.str.lower().str.contains(re.escape(name_q.lower()), na=False)
+        df = df[mask]
     if f.get("send_limit"):
         df = df.sort_values(by="total_spend", ascending=False).head(int(f["send_limit"]))
 
     return df.to_dict(orient="records")
 
 
+def _campaign_implies_departure_or_boundary(campaign_description: str) -> bool:
+    cd = (campaign_description or "").lower()
+    phrases = (
+        "not come back",
+        "not to come back",
+        "don't come back",
+        "dont come back",
+        "do not come back",
+        "never come back",
+        "not welcome",
+        "unwelcome",
+        "blacklist",
+        "stay away",
+        "do not return",
+        "don't return",
+        "dont return",
+        "no longer welcome",
+        "ban from",
+        "trespass",
+        "refuse service",
+    )
+    return any(p in cd for p in phrases)
+
+
+def _campaign_implies_apology_or_recovery(campaign_description: str) -> bool:
+    cd = (campaign_description or "").lower()
+    return any(
+        p in cd
+        for p in (
+            "apolog",
+            "sorry",
+            "make it right",
+            "complaint",
+            "service recovery",
+            "incident",
+        )
+    )
+
+
 @tool
 def decide_strategy(
     campaign_description: str, target_guests: List[Dict[str, Any]]
 ) -> Dict[str, Any]:
-    """Pick strategy from cohort stats (fast path — no extra LLM round-trip)."""
+    """Pick strategy from campaign intent and cohort stats (no extra LLM round-trip)."""
     if not target_guests:
         return {
             "strategy": "No guests",
@@ -191,11 +285,22 @@ def decide_strategy(
     avg_spend = sum(g.get("total_spend", 0) or 0 for g in target_guests) / len(target_guests)
     vip_count = sum(1 for g in target_guests if g.get("guest_type") == "VIP")
     avg_days = sum(g.get("last_visit", 0) or 0 for g in target_guests) / len(target_guests)
-
-    if avg_spend > 3000:
+    if _campaign_implies_departure_or_boundary(campaign_description):
+        strategy, tone = "Guest relations — boundary notice", "Clear, respectful, and firm"
+        key_message = "We are writing regarding your relationship with the property."
+        cta = "If you have questions, reply to this message for documented follow-up."
+    elif _campaign_implies_apology_or_recovery(campaign_description):
+        strategy, tone = "Service recovery", "Empathetic and accountable"
+        key_message = "We are sorry your experience missed the mark and want to make this right."
+        cta = "Share a time to connect so we can address your concerns directly."
+    elif avg_spend > 3000:
         strategy, tone = "VIP Win-back", "Exclusive & polished"
         key_message = "You are among our most valued guests."
         cta = "Let your concierge tailor your next stay."
+    elif avg_days >= 120 and avg_spend >= 800:
+        strategy, tone = "Long-lapse win-back", "Warm and personal"
+        key_message = "It has been a while — we have been holding a place for your return."
+        cta = "Your guest preferences are on file; let us plan your next stay."
     elif avg_spend > 1500:
         strategy, tone = "Re-engagement", "Warm & appreciative"
         key_message = "We would love to welcome you back."
@@ -205,7 +310,7 @@ def decide_strategy(
         key_message = "Memorable stays await you."
         cta = "Discover what is new on property."
 
-    if vip_count > len(target_guests) * 0.5:
+    if vip_count > len(target_guests) * 0.5 and not strategy.startswith("Guest relations"):
         strategy = "Premium " + strategy
 
     return {
