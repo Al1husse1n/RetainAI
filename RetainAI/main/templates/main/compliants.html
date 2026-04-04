@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Manrope:wght@300;400;600;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#39393b",
+                        "secondary-fixed": "#e4e1ea",
+                        "on-tertiary-container": "#2e3b77",
+                        "on-primary-fixed-variant": "#584400",
+                        "secondary": "#c8c5ce",
+                        "on-secondary-fixed-variant": "#47464d",
+                        "surface-container": "#201f21",
+                        "primary": "#e6c364",
+                        "on-primary": "#3d2e00",
+                        "outline": "#99907e",
+                        "background": "#131315",
+                        "surface-dim": "#131315",
+                        "surface-variant": "#353437",
+                        "on-error": "#690005",
+                        "outline-variant": "#4d4637",
+                        "on-secondary-container": "#b6b4bc",
+                        "on-surface-variant": "#d0c5b2",
+                        "primary-fixed": "#ffe08f",
+                        "inverse-surface": "#e5e1e4",
+                        "surface": "#131315",
+                        "error-container": "#93000a",
+                        "on-tertiary-fixed": "#041451",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-container": "#9ba8eb",
+                        "secondary-fixed-dim": "#c8c5ce",
+                        "secondary-container": "#47464d",
+                        "surface-container-high": "#2a2a2c",
+                        "primary-fixed-dim": "#e6c364",
+                        "on-primary-container": "#503d00",
+                        "surface-container-highest": "#353437",
+                        "on-secondary": "#303036",
+                        "on-tertiary": "#1e2b66",
+                        "tertiary-fixed": "#dde1ff",
+                        "on-tertiary-fixed-variant": "#35437e",
+                        "inverse-primary": "#755b00",
+                        "inverse-on-surface": "#313032",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed-dim": "#b9c3ff",
+                        "primary-container": "#c9a84c",
+                        "surface-tint": "#e6c364",
+                        "surface-container-low": "#1b1b1d",
+                        "surface-container-lowest": "#0e0e10",
+                        "on-secondary-fixed": "#1b1b21",
+                        "on-surface": "#e5e1e4",
+                        "tertiary": "#b9c4ff",
+                        "on-primary-fixed": "#241a00",
+                        "on-background": "#e5e1e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .glass-panel {
+            background: rgba(57, 57, 59, 0.6);
+            backdrop-filter: blur(20px);
+        }
+        .gold-gradient {
+            background: linear-gradient(135deg, #e6c364 0%, #c9a84c 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<!-- Navigation Shell -->
+<aside class="fixed left-0 top-0 h-full flex flex-col z-40 bg-[#0e0e10] w-64 border-r border-outline-variant/10">
+<div class="px-8 py-10">
+<h1 class="font-headline text-lg text-primary tracking-tight">Retain AI</h1>
+<p class="font-label tracking-wide text-[10px] uppercase text-on-surface/40 mt-1">Elite Management</p>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="text-on-surface/50 pl-4 py-3 flex items-center gap-3 hover:bg-surface-container-low hover:opacity-100 transition-all font-label tracking-wide text-xs uppercase" href="{% url 'dashboard' %}">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Desk</span>
+</a>
+<a class="bg-surface-container-high text-primary border-l-2 border-primary pl-4 py-3 flex items-center gap-3 font-label tracking-wide text-xs uppercase" href="#">
+<span class="material-symbols-outlined">assignment_late</span>
+<span>Complaints</span>
+</a>
+<a class="text-on-surface/50 pl-4 py-3 flex items-center gap-3 hover:bg-surface-container-low hover:opacity-100 transition-all font-label tracking-wide text-xs uppercase" href="#">
+<span class="material-symbols-outlined">person</span>
+<span>Guests</span>
+</a>
+<a class="text-on-surface/50 pl-4 py-3 flex items-center gap-3 hover:bg-surface-container-low hover:opacity-100 transition-all font-label tracking-wide text-xs uppercase" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span>Analytics</span>
+</a>
+<a class="text-on-surface/50 pl-4 py-3 flex items-center gap-3 hover:bg-surface-container-low hover:opacity-100 transition-all font-label tracking-wide text-xs uppercase" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="p-6 mt-auto">
+<button class="w-full gold-gradient text-on-primary-fixed font-bold py-4 text-xs uppercase tracking-widest transition-transform active:scale-[0.98]">
+                New Request
+            </button>
+<div class="mt-6 border-t border-outline-variant/10 pt-4">
+<a class="text-on-surface/50 flex items-center gap-3 px-2 py-2 hover:text-primary transition-colors font-label text-xs uppercase" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span>Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 min-h-screen">
+<!-- Top Bar -->
+<header class="flex justify-between items-center w-full px-12 py-8 bg-surface/50 backdrop-blur-md sticky top-0 z-30">
+<div>
+<h2 class="font-headline text-3xl font-bold tracking-tight text-on-surface">Guest Complaints</h2>
+<p class="text-on-surface/50 text-sm mt-1">Manage and resolve high-priority estate grievances.</p>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant group-focus-within:text-primary transition-colors">search</span>
+<input class="bg-surface-container-low border-none focus:ring-1 focus:ring-primary/30 w-64 pl-10 pr-4 py-2 text-sm text-on-surface placeholder:text-outline-variant/50 transition-all" placeholder="Search records..." type="text"/>
+</div>
+<div class="flex items-center gap-4 border-l border-outline-variant/20 pl-6">
+<button class="text-on-surface/70 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-10 h-10 bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">account_circle</span>
+</div>
+</div>
+</div>
+</header>
+<div class="px-12 pb-20 max-w-[1600px]">
+<!-- Stats Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-0 mb-12">
+<div class="bg-surface-container border-r border-b border-outline-variant/10 p-8">
+<p class="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface/40 mb-2">Total Cases</p>
+<div class="flex items-baseline gap-3">
+<h3 class="font-headline text-5xl font-bold">128</h3>
+<span class="text-error text-xs font-semibold">+12%</span>
+</div>
+</div>
+<div class="bg-surface-container border-r border-b border-outline-variant/10 p-8">
+<p class="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface/40 mb-2">New Arrival</p>
+<div class="flex items-baseline gap-3">
+<h3 class="font-headline text-5xl font-bold text-primary">09</h3>
+<span class="text-primary text-[10px] border border-primary/20 px-2 py-0.5">PRIORITY</span>
+</div>
+</div>
+<div class="bg-surface-container border-r border-b border-outline-variant/10 p-8">
+<p class="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface/40 mb-2">Open Issues</p>
+<div class="flex items-baseline gap-3">
+<h3 class="font-headline text-5xl font-bold">42</h3>
+<span class="text-on-surface/40 text-xs">— Active</span>
+</div>
+</div>
+<div class="bg-surface-container border-b border-outline-variant/10 p-8">
+<p class="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface/40 mb-2">Resolved</p>
+<div class="flex items-baseline gap-3">
+<h3 class="font-headline text-5xl font-bold text-on-surface/40">77</h3>
+<span class="material-symbols-outlined text-primary/40">verified</span>
+</div>
+</div>
+</section>
+<!-- Table Controls -->
+<div class="flex justify-between items-end mb-8">
+<div class="flex gap-8">
+<button class="pb-2 border-b-2 border-primary text-primary text-xs uppercase tracking-widest font-bold">All Requests</button>
+<button class="pb-2 border-b-2 border-transparent text-on-surface/40 hover:text-on-surface transition-colors text-xs uppercase tracking-widest font-bold">New</button>
+<button class="pb-2 border-b-2 border-transparent text-on-surface/40 hover:text-on-surface transition-colors text-xs uppercase tracking-widest font-bold">Open</button>
+<button class="pb-2 border-b-2 border-transparent text-on-surface/40 hover:text-on-surface transition-colors text-xs uppercase tracking-widest font-bold">Closed</button>
+</div>
+<button class="flex items-center gap-2 text-on-surface/60 hover:text-primary transition-colors text-xs uppercase tracking-tighter">
+<span class="material-symbols-outlined text-sm">refresh</span>
+                    Refresh Feed
+                </button>
+</div>
+<!-- Complaints Table -->
+<div class="bg-surface-container-low overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high/50 border-b border-outline-variant/20">
+<th class="py-5 px-6 font-label text-[10px] uppercase tracking-[0.2em] text-on-surface/40">ID</th>
+<th class="py-5 px-6 font-label text-[10px] uppercase tracking-[0.2em] text-on-surface/40">Guest</th>
+<th class="py-5 px-6 font-label text-[10px] uppercase tracking-[0.2em] text-on-surface/40">Contact</th>
+<th class="py-5 px-6 font-label text-[10px] uppercase tracking-[0.2em] text-on-surface/40 w-1/3">Complaint Details</th>
+<th class="py-5 px-6 font-label text-[10px] uppercase tracking-[0.2em] text-on-surface/40">Status</th>
+<th class="py-5 px-6 font-label text-[10px] uppercase tracking-[0.2em] text-on-surface/40 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-8 px-6 text-on-surface/40 text-xs font-label">#G-4022</td>
+<td class="py-8 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="professional portrait of a sophisticated middle-aged man with salt and pepper hair in a dark suit against a charcoal background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAADPJLStE35vBIYGwlFAVJ9jGWMLSXFAs6caSm3p4woOjjziP1I0qW7h7ARlzQ7E9kOKK-xh7ulA2GWFqvNp7RDAX5O0JdtsKv447k-5yGYf4jgMDakzGwElsHRGs5HLiQHaIsz6LP6lhFz8z6cuqkS64nDgTsAx-BlN8JX-J8MYVTZodMtIVGsTR5M7VXloh7yH1flylSVRxtDNVm3OaqUyQO89R-elR6Mry4T5S3D5htyBmkKiXXF2VGeAngWRfQ9OevKQB0jgKK"/>
+</div>
+<span class="font-headline font-semibold text-on-surface">Julian Sterling</span>
+</div>
+</td>
+<td class="py-8 px-6 font-label text-xs text-on-surface/60">j.sterling@estate.io</td>
+<td class="py-8 px-6">
+<details class="group/desc cursor-pointer">
+<summary class="list-none text-sm leading-relaxed line-clamp-1 text-on-surface/80 group-hover/desc:text-primary transition-colors">
+                                        HVAC system in West Wing Suite is emitting a rhythmic mechanical clicking sound...
+                                    </summary>
+<p class="mt-4 text-xs text-on-surface/50 bg-surface-container-lowest p-4 border-l-2 border-primary/30">
+                                        The noise is periodic, occurring every 12 minutes. It began approximately at 2:00 AM local time. Guest requests immediate inspection as it is disrupting sleep. VIP protocol engaged.
+                                    </p>
+</details>
+</td>
+<td class="py-8 px-6">
+<span class="bg-primary/10 text-primary px-3 py-1 text-[10px] font-bold uppercase tracking-widest">New</span>
+</td>
+<td class="py-8 px-6 text-right">
+<button class="px-6 py-2 border border-outline-variant/20 hover:border-primary hover:text-primary transition-all text-[10px] uppercase tracking-widest font-black active:scale-95">
+                                    Resolve
+                                </button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-8 px-6 text-on-surface/40 text-xs font-label">#G-3998</td>
+<td class="py-8 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="elegant woman with poise in professional attire, minimalist studio lighting, dark moody background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIqg2_1Y466l7afqpUod6NgJbFDvMo35gppL2Mz8mYF9iAaNuRxUuqqyfqBHs70O9SWS7zXKCYO04hWpKOB0GzNO-2PnH9qhovukq-ovv0Y5aRMnnPIFuTvORU8UL0MiqMh236J0JAPX5urS0JWD9lhnWpCuuazjItHcoCWbsc6XgwvUHB4RWZDeED4kBR8N9Jk5FJhHQNS4aecy1kBE7GVxCoPT6SWe2Z7HpD8vo9g04Ip7kVkHxHM8PUSG7IjZDE-e8fbbsY4Zg0"/>
+</div>
+<span class="font-headline font-semibold text-on-surface">Elena Vance</span>
+</div>
+</td>
+<td class="py-8 px-6 font-label text-xs text-on-surface/60">e.vance@luxemail.com</td>
+<td class="py-8 px-6">
+<details class="group/desc cursor-pointer">
+<summary class="list-none text-sm leading-relaxed line-clamp-1 text-on-surface/80 group-hover/desc:text-primary transition-colors">
+                                        Room service order arrived 45 minutes late and food was cold...
+                                    </summary>
+<p class="mt-4 text-xs text-on-surface/50 bg-surface-container-lowest p-4 border-l-2 border-primary/30">
+                                        Ordered steak and lobster at 7:30 PM, arrived at 8:15 PM. Steak was lukewarm, lobster overcooked. Guest is Platinum member and expects better service.
+                                    </p>
+</details>
+</td>
+<td class="py-8 px-6">
+<span class="bg-primary/10 text-primary px-3 py-1 text-[10px] font-bold uppercase tracking-widest">New</span>
+</td>
+<td class="py-8 px-6 text-right">
+<button class="resolve-btn px-6 py-2 border border-outline-variant/20 hover:border-primary hover:text-primary transition-all text-[10px] uppercase tracking-widest font-black active:scale-95">
+                                    Resolve
+                                </button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-8 px-6 text-on-surface/40 text-xs font-label">#G-3987</td>
+<td class="py-8 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="distinguished gentleman in formal wear, sophisticated lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAADPJLStE35vBIYGwlFAVJ9jGWMLSXFAs6caSm3p4woOjjziP1I0qW7h7ARlzQ7E9kOKK-xh7ulA2GWFqvNp7RDAX5O0JdtsKv447k-5yGYf4jgMDakzGwElsHRGs5HLiQHaIsz6LP6lhFz8z6cuqkS64nDgTsAx-BlN8JX-J8MYVTZodMtIVGsTR5M7VXloh7yH1flylSVRxtDNVm3OaqUyQO89R-elR6Mry4T5S3D5htyBmkKiXXF2VGeAngWRfQ9OevKQB0jgKK"/>
+</div>
+<span class="font-headline font-semibold text-on-surface">Marcus Hale</span>
+</div>
+</td>
+<td class="py-8 px-6 font-label text-xs text-on-surface/60">m.hale@executive.net</td>
+<td class="py-8 px-6">
+<details class="group/desc cursor-pointer">
+<summary class="list-none text-sm leading-relaxed line-clamp-1 text-on-surface/80 group-hover/desc:text-primary transition-colors">
+                                        Spa appointment was double-booked, had to wait 30 minutes...
+                                    </summary>
+<p class="mt-4 text-xs text-on-surface/50 bg-surface-container-lowest p-4 border-l-2 border-primary/30">
+                                        Booked couples massage for 2 PM, arrived on time but room was occupied by another couple. Waited 30 minutes, then received abbreviated 45-minute session.
+                                    </p>
+</details>
+</td>
+<td class="py-8 px-6">
+<span class="bg-primary/10 text-primary px-3 py-1 text-[10px] font-bold uppercase tracking-widest">New</span>
+</td>
+<td class="py-8 px-6 text-right">
+<button class="resolve-btn px-6 py-2 border border-outline-variant/20 hover:border-primary hover:text-primary transition-all text-[10px] uppercase tracking-widest font-black active:scale-95">
+                                    Resolve
+                                </button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-8 px-6 text-on-surface/40 text-xs font-label">#G-3975</td>
+<td class="py-8 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="professional woman in business attire, elegant pose" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIqg2_1Y466l7afqpUod6NgJbFDvMo35gppL2Mz8mYF9iAaNuRxUuqqyfqBHs70O9SWS7zXKCYO04hWpKOB0GzNO-2PnH9qhovukq-ovv0Y5aRMnnPIFuTvORU8UL0MiqMh236J0JAPX5urS0JWD9lhnWpCuuazjItHcoCWbsc6XgwvUHB4RWZDeED4kBR8N9Jk5FJhHQNS4aecy1kBE7GVxCoPT6SWe2Z7HpD8vo9g04Ip7kVkHxHM8PUSG7IjZDE-e8fbbsY4Zg0"/>
+</div>
+<span class="font-headline font-semibold text-on-surface">Sophia Chen</span>
+</div>
+</td>
+<td class="py-8 px-6 font-label text-xs text-on-surface/60">s.chen@techcorp.com</td>
+<td class="py-8 px-6">
+<details class="group/desc cursor-pointer">
+<summary class="list-none text-sm leading-relaxed line-clamp-1 text-on-surface/80 group-hover/desc:text-primary transition-colors">
+                                        Valet parking took 20 minutes to retrieve car...
+                                    </summary>
+<p class="mt-4 text-xs text-on-surface/50 bg-surface-container-lowest p-4 border-l-2 border-primary/30">
+                                        Checked out at 11 AM, requested car at valet. Waited 20 minutes before car was brought around. Had an important meeting to attend.
+                                    </p>
+</details>
+</td>
+<td class="py-8 px-6">
+<span class="bg-primary/10 text-primary px-3 py-1 text-[10px] font-bold uppercase tracking-widest">New</span>
+</td>
+<td class="py-8 px-6 text-right">
+<button class="resolve-btn px-6 py-2 border border-outline-variant/20 hover:border-primary hover:text-primary transition-all text-[10px] uppercase tracking-widest font-black active:scale-95">
+                                    Resolve
+                                </button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-8 px-6 text-on-surface/40 text-xs font-label">#G-3962</td>
+<td class="py-8 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="young professional man in casual business attire" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAADPJLStE35vBIYGwlFAVJ9jGWMLSXFAs6caSm3p4woOjjziP1I0qW7h7ARlzQ7E9kOKK-xh7ulA2GWFqvNp7RDAX5O0JdtsKv447k-5yGYf4jgMDakzGwElsHRGs5HLiQHaIsz6LP6lhFz8z6cuqkS64nDgTsAx-BlN8JX-J8MYVTZodMtIVGsTR5M7VXloh7yH1flylSVRxtDNVm3OaqUyQO89R-elR6Mry4T5S3D5htyBmkKiXXF2VGeAngWRfQ9OevKQB0jgKK"/>
+</div>
+<span class="font-headline font-semibold text-on-surface">David Kim</span>
+</div>
+</td>
+<td class="py-8 px-6 font-label text-xs text-on-surface/60">d.kim@startup.io</td>
+<td class="py-8 px-6">
+<details class="group/desc cursor-pointer">
+<summary class="list-none text-sm leading-relaxed line-clamp-1 text-on-surface/80 group-hover/desc:text-primary transition-colors">
+                                        Mini-bar was not restocked despite request...
+                                    </summary>
+<p class="mt-4 text-xs text-on-surface/50 bg-surface-container-lowest p-4 border-l-2 border-primary/30">
+                                        Called housekeeping twice to restock mini-bar, but it remained empty. Had to go to concierge for snacks, which was inconvenient.
+                                    </p>
+</details>
+</td>
+<td class="py-8 px-6">
+<span class="bg-primary/10 text-primary px-3 py-1 text-[10px] font-bold uppercase tracking-widest">New</span>
+</td>
+<td class="py-8 px-6 text-right">
+<button class="resolve-btn px-6 py-2 border border-outline-variant/20 hover:border-primary hover:text-primary transition-all text-[10px] uppercase tracking-widest font-black active:scale-95">
+                                    Resolve
+                                </button>
+</td>
+</tr>
+<summary class="list-none text-sm leading-relaxed line-clamp-1 text-on-surface/80 group-hover/desc:text-primary transition-colors">
+                                        Personal chauffeur was 15 minutes late for the gala pickup at the courtyard...
+                                    </summary>
+<p class="mt-4 text-xs text-on-surface/50 bg-surface-container-lowest p-4 border-l-2 border-primary/30">
+                                        Guest expressed severe dissatisfaction with the lack of punctuality. The transport logs show a dispatch delay at the security gate. Apology gift and credit adjustment recommended.
+                                    </p>
+</details>
+</td>
+<td class="py-8 px-6">
+<span class="bg-surface-container-highest text-on-surface/40 px-3 py-1 text-[10px] font-bold uppercase tracking-widest">Open</span>
+</td>
+<td class="py-8 px-6 text-right">
+<button class="px-6 py-2 border border-outline-variant/20 hover:border-primary hover:text-primary transition-all text-[10px] uppercase tracking-widest font-black active:scale-95">
+                                    Resolve
+                                </button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-8 px-6 text-on-surface/40 text-xs font-label">#G-3855</td>
+<td class="py-8 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="man in high-end tailored suit, minimalist portrait, warm lighting accents, executive style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6H8Eqt9jkMdwCGGGTYKKr7SMgYPMD6aq-WkSZL9n03Jp2wEeFYR0b4rvboK5VvpkIOxhlPOlztUMewWkr0aZkbBmhRt4HA5jtTUR2mKhdW1DW8JFTW2mviXzUbtBdx37XYXJull6f6V-K3ulwuSvOXIFMlLcCaJBxNd-iXZ5nUTDJwMuPvpB-J9OGt6T4ffilmhyK7PUfZhiJlKpgID5ThsTyCWp6qvgpUGiAoMkTg-vUGg-lVx8J7r7YHLQVHNQtW3RLrfdB3RXs"/>
+</div>
+<span class="font-headline font-semibold text-on-surface">Marcus Thorne</span>
+</div>
+</td>
+<td class="py-8 px-6 font-label text-xs text-on-surface/60">thorne@capital.com</td>
+<td class="py-8 px-6">
+<details class="group/desc cursor-pointer">
+<summary class="list-none text-sm leading-relaxed line-clamp-1 text-on-surface/80 group-hover/desc:text-primary transition-colors">
+                                        Wine cellar inventory discrepancy regarding the 1945 Romanée-Conti...
+                                    </summary>
+<p class="mt-4 text-xs text-on-surface/50 bg-surface-container-lowest p-4 border-l-2 border-primary/30">
+                                        The vintage was requested but sommelier reported out of stock despite digital records indicating two bottles. High-level audit required.
+                                    </p>
+</details>
+</td>
+<td class="py-8 px-6">
+<span class="bg-primary/10 text-primary px-3 py-1 text-[10px] font-bold uppercase tracking-widest">New</span>
+</td>
+<td class="py-8 px-6 text-right">
+<button class="px-6 py-2 border border-outline-variant/20 hover:border-primary hover:text-primary transition-all text-[10px] uppercase tracking-widest font-black active:scale-95">
+                                    Resolve
+                                </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination/Footer -->
+<div class="mt-12 flex justify-between items-center text-on-surface/40 font-label text-[10px] uppercase tracking-widest">
+<div>Showing 1-10 of 128 results</div>
+<div class="flex gap-4">
+<button class="hover:text-primary transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">chevron_left</span> Previous
+                    </button>
+<button class="hover:text-primary transition-colors flex items-center gap-1">
+                        Next <span class="material-symbols-outlined text-xs">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual Toast / Processing Overlay (Hidden by Default) -->
+<div class="fixed inset-0 z-50 pointer-events-none opacity-0 transition-opacity flex items-center justify-center" id="ai-processing">
+<div class="glass-panel p-12 border border-primary/20 shadow-2xl flex flex-col items-center max-w-sm text-center">
+<div class="w-16 h-16 border-2 border-primary/20 border-t-primary animate-spin mb-6"></div>
+<h4 class="font-headline text-xl text-primary mb-2">Retain AI Active</h4>
+<p class="text-xs text-on-surface/60 font-label tracking-widest uppercase">Processing resolution protocol &amp; drafting response...</p>
+</div>
+</div>
+<!-- Email Preview Modal (Hidden by Default) -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/50" id="email-preview">
+<div class="bg-surface p-8 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+<h3 class="font-headline text-2xl font-bold text-on-surface mb-4" id="preview-subject"></h3>
+<div class="mb-6">
+<h4 class="font-label text-xs uppercase tracking-widest text-on-surface/60 mb-2">Email Body</h4>
+<div id="preview-body" class="whitespace-pre-wrap text-sm text-on-surface bg-surface-container-low p-4 border border-outline-variant/20"></div>
+</div>
+<button onclick="document.getElementById('email-preview').classList.add('hidden')" class="px-6 py-2 bg-primary text-on-primary font-bold uppercase tracking-widest hover:bg-primary/80 transition-colors">
+Close Preview
+</button>
+</div>
+</div>
+<!-- Success Toast (Hidden) -->
+<div class="fixed bottom-12 right-12 z-50 pointer-events-none opacity-0 translate-y-8 transition-all duration-500" id="success-toast">
+<div class="bg-surface-container-highest px-8 py-4 border-l-4 border-primary flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-weight="fill">verified</span>
+<span class="font-label text-xs uppercase tracking-widest text-on-surface">Resolution Protocol Dispatched</span>
+</div>
+</div>
+<script>
+        /**
+         * Complaint Resolution with SSE
+         */
+        (function() {
+            const processingOverlay = document.getElementById('ai-processing');
+            const successToast = document.getElementById('success-toast');
+            let activeSource = null;
+
+            function showProcessing() {
+                processingOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            }
+
+            function hideProcessing() {
+                processingOverlay.classList.add('opacity-0', 'pointer-events-none');
+            }
+
+            function showSuccess() {
+                successToast.classList.remove('opacity-0', 'translate-y-8');
+                setTimeout(() => {
+                    successToast.classList.add('opacity-0', 'translate-y-8');
+                }, 3000);
+            }
+
+            function resolveComplaint(button) {
+                const row = button.closest('tr');
+                const guestName = row.querySelector('.font-headline').innerText.trim();
+                const email = row.querySelectorAll('td')[2].innerText.trim();
+                const summary = row.querySelector('summary').innerText.trim();
+                const details = row.querySelector('p').innerText.trim();
+                const complaint = summary + ' ' + details;
+
+                if (activeSource) {
+                    activeSource.close();
+                    activeSource = null;
+                }
+
+                showProcessing();
+                button.disabled = true;
+                button.innerText = 'PROCESSING...';
+
+                const streamUrl = '/stream-complaint/?name=' + encodeURIComponent(guestName) +
+                                  '&email=' + encodeURIComponent(email) +
+                                  '&complaint=' + encodeURIComponent(complaint);
+
+                const source = new EventSource(streamUrl);
+                activeSource = source;
+
+                source.onmessage = function(ev) {
+                    if (!ev.data || ev.data === "") return;
+                    const raw = String(ev.data).trim();
+                    let payload;
+                    try {
+                        payload = JSON.parse(raw);
+                    } catch (e) {
+                        console.error('SSE parse error', e, raw);
+                        return;
+                    }
+                    if (!payload || !payload.type) return;
+
+                    if (payload.type === 'log') {
+                        console.log('Complaint SSE:', payload.message);
+                        return;
+                    }
+                    if (payload.type === 'email_preview') {
+                        const previewModal = document.getElementById('email-preview');
+                        const subjectEl = document.getElementById('preview-subject');
+                        const bodyEl = document.getElementById('preview-body');
+                        subjectEl.innerText = payload.email.subject;
+                        bodyEl.innerText = payload.email.body;
+                        previewModal.classList.remove('hidden');
+                        return;
+                    }
+                    if (payload.type === 'error') {
+                        console.error('Complaint error:', payload.message);
+                        source.close();
+                        hideProcessing();
+                        button.disabled = false;
+                        button.innerText = 'RESOLVE';
+                        return;
+                    }
+                    if (payload.type === 'done') {
+                        source.close();
+                        hideProcessing();
+                        showSuccess();
+                        button.innerText = 'RESOLVED';
+                        button.classList.add('text-primary/40', 'border-primary/20');
+                        button.classList.remove('hover:border-primary', 'hover:text-primary');
+                        return;
+                    }
+                };
+
+                source.onerror = function() {
+                    source.close();
+                    hideProcessing();
+                    button.disabled = false;
+                    button.innerText = 'RESOLVE';
+                };
+            }
+
+            document.querySelectorAll('.resolve-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    resolveComplaint(this);
+                });
+            });
+        })();
+    </script>
+</body></html>

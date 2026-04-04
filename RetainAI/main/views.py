@@ -16,6 +16,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from main.agents.compliant_agent import run_agent as run_complaint_agent
+from main.agents.complaint_tools import tools as complaint_tools
 from main.agents.tools import (
     decide_strategy,
     extract_guest_filters,
@@ -28,6 +29,8 @@ from main.sse_utils import format_sse
 
 
 _SSE_PRINT = os.environ.get("RETAIN_SSE_PRINT", "1") != "0"
+
+complaint_tool_dict = {t.name: t for t in complaint_tools}
 
 
 def _sse_emit(data: Dict[str, Any]) -> str:
@@ -60,6 +63,10 @@ def landing(request):
 
 def dashboard(request):
     return render(request, "main/dashboard.html")
+
+
+def complaints(request):
+    return render(request, "main/compliants.html")
 
 
 def _parse_manual_filters(request) -> Dict[str, Any]:
@@ -220,6 +227,44 @@ def stream_campaign(request) -> StreamingHttpResponse:
     resp["Cache-Control"] = "no-cache"
     resp["X-Accel-Buffering"] = "no"
     return resp
+def _complaint_event_stream(name: str, email: str, complaint: str) -> Iterator[str]:
+    if not name.strip() or not email.strip() or not complaint.strip():
+        yield _sse_emit({"type": "error", "message": "Missing name, email, or complaint."})
+        return
+
+    try:
+        yield _sse_emit({"type": "log", "message": "📧 Generating resolution email..."})
+        email_data = complaint_tool_dict["generate_resolution_email"].invoke({
+            "name": name,
+            "email": email,
+            "complaint_description": complaint
+        })
+        yield _sse_emit(
+            {"type": "log", "message": f"✅ Email generated for {name}", "data": {"email": _json_safe_value(email_data)}}
+        )
+        yield _sse_emit({"type": "email_preview", "email": _json_safe_value(email_data)})
+
+        yield _sse_emit({"type": "log", "message": "📤 Sending resolution email (demo)..."})
+        send_result = complaint_tool_dict["send_resolution_email"].invoke({"email_dict": email_data})
+        yield _sse_emit(
+            {"type": "log", "message": f"✅ Email sent to {email}", "data": _json_safe_value(send_result)}
+        )
+        yield _sse_emit({"type": "done"})
+    except Exception as exc:
+        yield _sse_emit({"type": "error", "message": str(exc)})
+
+
+def stream_complaint(request) -> StreamingHttpResponse:
+    name = request.GET.get("name", "").strip()
+    email = request.GET.get("email", "").strip()
+    complaint = request.GET.get("complaint", "").strip()
+
+    gen: Generator[str, None, None] = _complaint_event_stream(name, email, complaint)
+    resp = StreamingHttpResponse(gen, content_type="text/event-stream")
+    resp["Cache-Control"] = "no-cache"
+    resp["X-Accel-Buffering"] = "no"
+    return resp
+
 
 @csrf_exempt
 def get_complaint(request):

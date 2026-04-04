@@ -1,5 +1,5 @@
 # compliant_agent.py
-from complaint_tools import tools
+from .complaint_tools import tools
 import json
 from datetime import datetime
 
