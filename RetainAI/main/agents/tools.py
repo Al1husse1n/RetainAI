@@ -1,5 +1,5 @@
 """
-Campaign pipeline tools (LangChain @tool) backed by Ollama.
+Campaign pipeline tools (LangChain @tool) backed by Google Gemini.
 Uses demo_guests.csv next to this file — no discounts in generated copy (hackathon rule).
 """
 
@@ -12,30 +12,30 @@ import re
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-
+from dotenv import load_dotenv
 import pandas as pd
 from langchain_core.tools import tool
-from langchain_ollama import ChatOllama
+from langchain_google_genai import ChatGoogleGenerativeAI
+
+load_dotenv()
 
 # --- Paths: demo_guests.csv lives in main/agents/ ---
 _AGENTS_DIR = Path(__file__).resolve().parent
 _DEMO_CSV = _AGENTS_DIR / "demo_guests.csv"
 
-# Ollama: override via env for hackathon machines
-OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
-OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3.2:3b")
+_llm = None
 
-_llm: Optional[ChatOllama] = None
-
-
-def get_llm() -> ChatOllama:
-    """Lazy-init so Django can import this module before Ollama is up."""
+def get_llm():
     global _llm
     if _llm is None:
-        _llm = ChatOllama(
-            model=OLLAMA_MODEL,
+        api_key = os.getenv('GOOGLE_API_KEY')
+        if not api_key:
+            raise ValueError("GOOGLE_API_KEY environment variable is not set")
+        print(f"Initializing Gemini LLM with API key: {api_key[:10]}... using model gemini-1.5-pro")
+        _llm = ChatGoogleGenerativeAI(
+            model="gemini-2.5-flash",  # stable model
             temperature=0.3,
-            base_url=OLLAMA_BASE_URL,
+            api_key=api_key
         )
     return _llm
 
@@ -350,7 +350,7 @@ def _fallback_body(guest: Dict[str, Any], strategy: Dict[str, Any]) -> str:
 def generate_email(
     guest: Dict[str, Any], campaign_description: str, strategy: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Ollama generates subject/body JSON; no discount language."""
+    """Gemini generates subject/body JSON; no discount language."""
 
     def _safe(v: Any, default: str = "") -> str:
         if v is None or v == "" or v == "nan":
@@ -379,7 +379,8 @@ Rules: NO discounts, NO percentages off, NO price cuts. Luxury hotel voice. JSON
         parsed = extract_json_from_response(str(text))
         subj = parsed.get("subject") or _fallback_subject(guest, strategy)
         body = parsed.get("body") or _fallback_body(guest, strategy)
-    except Exception:
+    except Exception as e:
+        print(f"Gemini API error in generate_email: {e}")
         subj = _fallback_subject(guest, strategy)
         body = _fallback_body(guest, strategy)
 

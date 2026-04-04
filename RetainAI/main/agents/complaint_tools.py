@@ -1,5 +1,5 @@
 """
-Complaint resolution tools (LangChain @tool) backed by Ollama.
+Complaint resolution tools (LangChain @tool) backed by Google Gemini.
 Generates and sends resolution emails for customer complaints.
 """
 
@@ -11,25 +11,24 @@ import re
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-
+from dotenv import load_dotenv
 from langchain_core.tools import tool
-from langchain_ollama import ChatOllama
+from langchain_google_genai import ChatGoogleGenerativeAI
 
-# Ollama: override via env for hackathon machines
-OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
-OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3.2:3b")
+load_dotenv()
 
-_llm: Optional[ChatOllama] = None
+_llm = None
 
-
-def get_llm() -> ChatOllama:
-    """Lazy-init so Django can import this module before Ollama is up."""
+def get_llm():
     global _llm
     if _llm is None:
-        _llm = ChatOllama(
-            model=OLLAMA_MODEL,
+        api_key = os.getenv('GOOGLE_API_KEY')
+        if not api_key:
+            raise ValueError("GOOGLE_API_KEY environment variable is not set")
+        _llm = ChatGoogleGenerativeAI(
+            model="gemini-2.5-flash",  # stable model
             temperature=0.3,
-            base_url=OLLAMA_BASE_URL,
+            api_key=api_key
         )
     return _llm
 
@@ -62,7 +61,7 @@ def extract_json_from_response(response_text: str) -> dict:
 def generate_resolution_email(
     name: str, email: str, complaint_description: str
 ) -> Dict[str, Any]:
-    """Generate a resolution email for the customer complaint using Ollama."""
+    """Generate a resolution email for the customer complaint using Google Gemini."""
     prompt = f"""Generate a professional resolution email for the following customer complaint.
 
 Customer Name: {name}
@@ -76,8 +75,12 @@ Rules:
 - No discounts, offers, or price cuts
 - Keep it concise
 - JSON only: {{"subject":"...","body":"..."}}
-
-Return ONLY the JSON object."""
+Return ONLY valid JSON.
+Do NOT include markdown.
+Do NOT include explanation.
+Do NOT include ```json.
+Output must start with curly brace and end with curly brace like json.
+."""
 
     try:
         r = get_llm().invoke(prompt)
@@ -85,7 +88,8 @@ Return ONLY the JSON object."""
         out = extract_json_from_response(str(content))
         subj = out.get("subject", f"Issue Resolution for {name}")
         body = out.get("body", f"Dear {name},\n\nWe have resolved your complaint regarding: {complaint_description}.\n\nThank you for bringing this to our attention.\n\nBest regards,\nThe Retain AI Team")
-    except Exception:
+    except Exception as e:
+        print(f"Gemini API error in generate_resolution_email: {e}")
         subj = f"Issue Resolution for {name}"
         body = f"Dear {name},\n\nWe apologize for any inconvenience caused by: {complaint_description}.\n\nThe issue has been resolved.\n\nBest regards,\nThe Retain AI Team"
 

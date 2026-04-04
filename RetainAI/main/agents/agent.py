@@ -1,5 +1,5 @@
 # agent2.py
-from tools2 import tools, load_guests
+from tools import tools, load_guests
 import json
 from datetime import datetime
 
@@ -145,5 +145,5 @@ def run_agent_detailed(user_input: str, manual_filters: dict = None):
 
 
 print("✅ Retain AI Agent ready (Sequential Executor)")
-print("📧 Using Ollama with llama3.2:3b")
+print("📧 Using Google Gemini API")
 print("💡 Emails will be displayed as they're generated\n")

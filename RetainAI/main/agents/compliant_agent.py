@@ -73,5 +73,5 @@ def run_agent_detailed(name: str, email: str, complaint_description: str):
 
 
 print("✅ Retain AI Complaint Resolution Agent ready (Sequential Executor)")
-print("📧 Using Ollama with llama3.2:3b")
+print("📧 Using Google Gemini API")
 print("💡 Resolution emails will be generated and 'sent' as demo\n")
