@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    command: serve
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  web:
+    build: .
+    ports:
+      - "${PORT:-8000}:8000"
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - OLLAMA_MODEL=llama3.2:3b
+      - DEBUG=False
+      - DJANGO_SECRET_KEY=your-production-secret-key-here-change-this
+      - PORT=${PORT:-8000}
+    command: gunicorn --bind 0.0.0.0:8000 RetainAI.wsgi:application
+
+volumes:
+  ollama_data:
