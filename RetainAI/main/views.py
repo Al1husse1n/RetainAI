@@ -11,9 +11,11 @@ import math
 import os
 from typing import Any, Dict, Generator, Iterator, List
 
-from django.http import StreamingHttpResponse
+from django.http import JsonResponse, StreamingHttpResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 
+from main.agents.compliant_agent import run_agent as run_complaint_agent
 from main.agents.tools import (
     decide_strategy,
     extract_guest_filters,
@@ -23,6 +25,7 @@ from main.agents.tools import (
     send_campaign,
 )
 from main.sse_utils import format_sse
+
 
 _SSE_PRINT = os.environ.get("RETAIN_SSE_PRINT", "1") != "0"
 
@@ -217,3 +220,42 @@ def stream_campaign(request) -> StreamingHttpResponse:
     resp["Cache-Control"] = "no-cache"
     resp["X-Accel-Buffering"] = "no"
     return resp
+
+@csrf_exempt
+def get_complaint(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "Only POST is allowed."}, status=405)
+
+    try:
+        if request.content_type == "application/json":
+            data = json.loads(request.body.decode("utf-8") if isinstance(request.body, bytes) else request.body)
+        else:
+            data = {
+                "name": request.POST.get("name", "").strip(),
+                "email": request.POST.get("email", "").strip(),
+                "complaint": request.POST.get("complaint", "").strip(),
+            }
+
+        name = (data.get("name") or "").strip()
+        email = (data.get("email") or "").strip()
+        complaint = (data.get("complaint") or "").strip()
+
+        if not name or not email or not complaint:
+            return JsonResponse({"error": "Missing name, email, or complaint description."}, status=400)
+
+        result = run_complaint_agent(name, email, complaint)
+
+        return JsonResponse(
+            {
+                "message": "Complaint received and resolution email processed.",
+                "email": email,
+                "name": name,
+                "complaint": complaint,
+                "result": result,
+            },
+            status=200,
+        )
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON data."}, status=400)
+    except Exception as exc:
+        return JsonResponse({"error": str(exc)}, status=500)
