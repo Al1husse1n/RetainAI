@@ -45,7 +45,9 @@ Render will automatically set:
 - `PORT`: The port your app should listen on (for Docker deployments)
 
 Set these in Render dashboard:
-- `GOOGLE_API_KEY`: Your Google AI API key (required for Gemini)
+- `GOOGLE_API_KEY`: Your primary Google AI API key (required for Gemini)
+- `GOOGLE_API_KEY_BACKUP_1`: Optional backup Google AI API key to use if the primary key has reached quota.
+- `GOOGLE_API_KEY_BACKUP_2`: Optional second backup Google AI API key to use if the first key fails.
 - `DJANGO_SECRET_KEY`: A secure random key
 - `DEBUG`: False
 

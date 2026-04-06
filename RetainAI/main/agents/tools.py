@@ -24,18 +24,74 @@ _AGENTS_DIR = Path(__file__).resolve().parent
 _DEMO_CSV = _AGENTS_DIR / "demo_guests.csv"
 
 _llm = None
+_api_key_index = 0
+
+
+def _load_google_api_keys() -> List[str]:
+    keys: List[str] = []
+    for name in (
+        "GOOGLE_API_KEY",
+        "GOOGLE_API_KEY_BACKUP_1",
+        "GOOGLE_API_KEY_BACKUP_2",
+    ):
+        value = os.getenv(name)
+        if value:
+            keys.append(value.strip())
+    fallback = os.getenv("GOOGLE_API_KEYS", "")
+    for part in fallback.split(","):
+        key = part.strip()
+        if key and key not in keys:
+            keys.append(key)
+    return keys
+
+
+def _current_api_key() -> str:
+    keys = _load_google_api_keys()
+    if not keys:
+        raise ValueError(
+            "Set GOOGLE_API_KEY or at least one backup key like GOOGLE_API_KEY_BACKUP_1"
+        )
+    return keys[_api_key_index]
+
+
+def _advance_api_key() -> None:
+    global _api_key_index
+    keys = _load_google_api_keys()
+    if len(keys) <= 1:
+        return
+    _api_key_index = (_api_key_index + 1) % len(keys)
+
+
+def _reset_llm() -> None:
+    global _llm
+    _llm = None
+
+
+def _invoke_with_fallback(prompt: str):
+    keys = _load_google_api_keys()
+    last_exc: Optional[Exception] = None
+    for attempt in range(len(keys)):
+        try:
+            return get_llm().invoke(prompt)
+        except Exception as exc:
+            last_exc = exc
+            if attempt == len(keys) - 1:
+                raise
+            print(
+                "Gemini API key failed, switching to next available key."
+            )
+            _advance_api_key()
+            _reset_llm()
+    raise last_exc
+
 
 def get_llm():
     global _llm
     if _llm is None:
-        api_key = os.getenv('GOOGLE_API_KEY')
-        if not api_key:
-            raise ValueError("GOOGLE_API_KEY environment variable is not set")
-        print(f"Initializing Gemini LLM with API key: {api_key[:10]}... using model gemini-1.5-pro")
         _llm = ChatGoogleGenerativeAI(
             model="gemini-2.5-flash",  # stable model
             temperature=0.3,
-            api_key=api_key
+            api_key=_current_api_key()
         )
     return _llm
 
@@ -140,7 +196,7 @@ Return ONLY a JSON object with any of these keys (omit unknowns, use null):
 No markdown, JSON only."""
 
     try:
-        r = get_llm().invoke(prompt)
+        r = _invoke_with_fallback(prompt)
         content = r.content if hasattr(r, "content") else str(r)
         out = extract_json_from_response(str(content))
         # Normalize alternate keys small models sometimes emit
@@ -374,7 +430,7 @@ Rules: NO discounts, NO percentages off, NO price cuts. Luxury hotel voice. JSON
 {{"subject":"...","body":"..."}}"""
 
     try:
-        r = get_llm().invoke(profile)
+        r = _invoke_with_fallback(profile)
         text = r.content if hasattr(r, "content") else str(r)
         parsed = extract_json_from_response(str(text))
         subj = parsed.get("subject") or _fallback_subject(guest, strategy)
