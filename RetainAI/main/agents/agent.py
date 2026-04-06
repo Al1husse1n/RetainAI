@@ -1,10 +1,23 @@
 # agent2.py
 from tools import tools, load_guests
 import json
+import traceback
 from datetime import datetime
 
 # Create tools dictionary
 tool_dict = {t.name: t for t in tools}
+
+def _invoke_tool(name: str, kwargs: dict):
+    print(f"[Agent] Invoking tool: {name} with args: {json.dumps(kwargs, default=str)}")
+    try:
+        result = tool_dict[name].invoke(kwargs)
+        print(f"[Agent] Tool {name} result: {json.dumps(result, default=str)[:400]}")
+        return result
+    except Exception as exc:
+        print(f"[Agent] Error in tool {name}: {exc}")
+        traceback.print_exc()
+        raise
+
 
 def run_agent(user_input: str, manual_filters: dict = None):
     """Run tools in sequence and show real-time progress"""
@@ -13,7 +26,7 @@ def run_agent(user_input: str, manual_filters: dict = None):
     print("📋 STEP 1: Extracting filters from campaign description")
     print("="*70)
     
-    extracted = tool_dict["extract_guest_filters"].invoke({
+    extracted = _invoke_tool("extract_guest_filters", {
         "campaign_description": user_input
     })
     print(f"✅ Extracted filters: {json.dumps(extracted, indent=2)}")
@@ -22,7 +35,7 @@ def run_agent(user_input: str, manual_filters: dict = None):
     print("📋 STEP 2: Merging with manual filters")
     print("="*70)
     
-    merged = tool_dict["merge_with_manual_filters"].invoke({
+    merged = _invoke_tool("merge_with_manual_filters", {
         "extracted_filters": extracted,
         "manual_filters": manual_filters or {}
     })
@@ -32,7 +45,7 @@ def run_agent(user_input: str, manual_filters: dict = None):
     print("📋 STEP 3: Filtering guests")
     print("="*70)
     
-    filtered_guests = tool_dict["filter_guests"].invoke({
+    filtered_guests = _invoke_tool("filter_guests", {
         "filters": merged
     })
     
@@ -44,7 +57,7 @@ def run_agent(user_input: str, manual_filters: dict = None):
     print("📋 STEP 4: Deciding campaign strategy")
     print("="*70)
     
-    strategy = tool_dict["decide_strategy"].invoke({
+    strategy = _invoke_tool("decide_strategy", {
         "campaign_description": user_input,
         "target_guests": filtered_guests
     })
@@ -67,7 +80,7 @@ def run_agent(user_input: str, manual_filters: dict = None):
         print(f"📧 Email {i}/{len(filtered_guests)} for: {guest.get('name', 'Guest')}")
         print(f"{'─'*70}")
         
-        email = tool_dict["generate_email"].invoke({
+        email = _invoke_tool("generate_email", {
             "guest": guest,
             "campaign_description": user_input,
             "strategy": strategy
@@ -87,7 +100,7 @@ def run_agent(user_input: str, manual_filters: dict = None):
     print("📋 STEP 6: Sending campaign")
     print("="*70)
     
-    result = tool_dict["send_campaign"].invoke({"emails": emails})
+    result = _invoke_tool("send_campaign", {"emails": emails})
     print(f"\n✅ {result.get('message')}")
     
     return {

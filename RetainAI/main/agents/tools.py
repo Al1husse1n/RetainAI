@@ -5,6 +5,7 @@ Uses demo_guests.csv next to this file — no discounts in generated copy (hacka
 
 from __future__ import annotations
 
+import concurrent.futures
 import json
 import os
 import random
@@ -17,12 +18,14 @@ import pandas as pd
 from langchain_core.tools import tool
 from langchain_google_genai import ChatGoogleGenerativeAI
 
-load_dotenv()
+_AGENTS_DIR = Path(__file__).resolve().parent
+load_dotenv(_AGENTS_DIR / ".env")
 
 # --- Paths: demo_guests.csv lives in main/agents/ ---
-_AGENTS_DIR = Path(__file__).resolve().parent
 _DEMO_CSV = _AGENTS_DIR / "demo_guests.csv"
 
+_GOOGLE_API_REQUEST_TIMEOUT = int(os.getenv("GOOGLE_API_REQUEST_TIMEOUT", "15"))
+_REQUEST_EXECUTOR = concurrent.futures.ThreadPoolExecutor(max_workers=2)
 _llm = None
 _api_key_index = 0
 
@@ -42,6 +45,7 @@ def _load_google_api_keys() -> List[str]:
         key = part.strip()
         if key and key not in keys:
             keys.append(key)
+    print(f"[Tools] Loaded {len(keys)} Google API key(s)")
     return keys
 
 
@@ -51,6 +55,7 @@ def _current_api_key() -> str:
         raise ValueError(
             "Set GOOGLE_API_KEY or at least one backup key like GOOGLE_API_KEY_BACKUP_1"
         )
+    print(f"[Tools] Using Google API key {(_api_key_index + 1)}/{len(keys)}")
     return keys[_api_key_index]
 
 
@@ -69,19 +74,32 @@ def _reset_llm() -> None:
 
 def _invoke_with_fallback(prompt: str):
     keys = _load_google_api_keys()
+    if not keys:
+        raise ValueError(
+            "Set GOOGLE_API_KEY or at least one backup key like GOOGLE_API_KEY_BACKUP_1"
+        )
     last_exc: Optional[Exception] = None
     for attempt in range(len(keys)):
+        print(f"[Tools] Gemini request attempt {attempt + 1}/{len(keys)}; prompt length={len(prompt)}")
         try:
-            return get_llm().invoke(prompt)
+            llm = get_llm()
+            future = _REQUEST_EXECUTOR.submit(llm.invoke, prompt)
+            response = future.result(timeout=_GOOGLE_API_REQUEST_TIMEOUT)
+            print("[Tools] Gemini request succeeded")
+            return response
+        except concurrent.futures.TimeoutError as exc:
+            future.cancel()
+            last_exc = exc
+            print(f"[Tools] Gemini request timed out after {_GOOGLE_API_REQUEST_TIMEOUT} seconds")
         except Exception as exc:
             last_exc = exc
-            if attempt == len(keys) - 1:
-                raise
-            print(
-                "Gemini API key failed, switching to next available key."
-            )
-            _advance_api_key()
-            _reset_llm()
+            print(f"[Tools] Gemini API error on attempt {attempt + 1}: {exc}")
+        if attempt == len(keys) - 1:
+            print("[Tools] All API keys exhausted")
+            raise last_exc
+        print("[Tools] Switching to next available Google API key")
+        _advance_api_key()
+        _reset_llm()
     raise last_exc
 
 
@@ -196,9 +214,13 @@ Return ONLY a JSON object with any of these keys (omit unknowns, use null):
 No markdown, JSON only."""
 
     try:
+        print("[Tools] Running extract_guest_filters")
+        print(f"[Tools] Prompt length: {len(prompt)}")
         r = _invoke_with_fallback(prompt)
         content = r.content if hasattr(r, "content") else str(r)
+        print(f"[Tools] Raw response length: {len(str(content))}")
         out = extract_json_from_response(str(content))
+        print(f"[Tools] Parsed filter output: {out}")
         # Normalize alternate keys small models sometimes emit
         for alias, key in (
             ("guest_name", "name_contains"),
@@ -430,9 +452,13 @@ Rules: NO discounts, NO percentages off, NO price cuts. Luxury hotel voice. JSON
 {{"subject":"...","body":"..."}}"""
 
     try:
+        print("[Tools] Running generate_email")
+        print(f"[Tools] Profile prompt length: {len(profile)}")
         r = _invoke_with_fallback(profile)
         text = r.content if hasattr(r, "content") else str(r)
+        print(f"[Tools] Raw email response length: {len(str(text))}")
         parsed = extract_json_from_response(str(text))
+        print(f"[Tools] Parsed email output: {parsed}")
         subj = parsed.get("subject") or _fallback_subject(guest, strategy)
         body = parsed.get("body") or _fallback_body(guest, strategy)
     except Exception as e:

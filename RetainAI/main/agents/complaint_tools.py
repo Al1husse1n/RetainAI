@@ -5,6 +5,7 @@ Generates and sends resolution emails for customer complaints.
 
 from __future__ import annotations
 
+import concurrent.futures
 import json
 import os
 import re
@@ -15,8 +16,11 @@ from dotenv import load_dotenv
 from langchain_core.tools import tool
 from langchain_google_genai import ChatGoogleGenerativeAI
 
-load_dotenv()
+_AGENTS_DIR = Path(__file__).resolve().parent
+load_dotenv(_AGENTS_DIR / ".env")
 
+_GOOGLE_API_REQUEST_TIMEOUT = int(os.getenv("GOOGLE_API_REQUEST_TIMEOUT", "15"))
+_REQUEST_EXECUTOR = concurrent.futures.ThreadPoolExecutor(max_workers=2)
 _llm = None
 _api_key_index = 0
 
@@ -36,6 +40,7 @@ def _load_google_api_keys() -> List[str]:
         key = part.strip()
         if key and key not in keys:
             keys.append(key)
+    print(f"[ComplaintTools] Loaded {len(keys)} Google API key(s)")
     return keys
 
 
@@ -45,6 +50,7 @@ def _current_api_key() -> str:
         raise ValueError(
             "Set GOOGLE_API_KEY or at least one backup key like GOOGLE_API_KEY_BACKUP_1"
         )
+    print(f"[ComplaintTools] Using Google API key {(_api_key_index + 1)}/{len(keys)}")
     return keys[_api_key_index]
 
 
@@ -63,19 +69,32 @@ def _reset_llm() -> None:
 
 def _invoke_with_fallback(prompt: str):
     keys = _load_google_api_keys()
+    if not keys:
+        raise ValueError(
+            "Set GOOGLE_API_KEY or at least one backup key like GOOGLE_API_KEY_BACKUP_1"
+        )
     last_exc: Optional[Exception] = None
     for attempt in range(len(keys)):
+        print(f"[ComplaintTools] Gemini request attempt {attempt + 1}/{len(keys)}; prompt length={len(prompt)}")
         try:
-            return get_llm().invoke(prompt)
+            llm = get_llm()
+            future = _REQUEST_EXECUTOR.submit(llm.invoke, prompt)
+            response = future.result(timeout=_GOOGLE_API_REQUEST_TIMEOUT)
+            print("[ComplaintTools] Gemini request succeeded")
+            return response
+        except concurrent.futures.TimeoutError as exc:
+            future.cancel()
+            last_exc = exc
+            print(f"[ComplaintTools] Gemini request timed out after {_GOOGLE_API_REQUEST_TIMEOUT} seconds")
         except Exception as exc:
             last_exc = exc
-            if attempt == len(keys) - 1:
-                raise
-            print(
-                "Gemini API key failed, switching to next available key."
-            )
-            _advance_api_key()
-            _reset_llm()
+            print(f"[ComplaintTools] Gemini API error on attempt {attempt + 1}: {exc}")
+        if attempt == len(keys) - 1:
+            print("[ComplaintTools] All API keys exhausted")
+            raise last_exc
+        print("[ComplaintTools] Switching to next available Google API key")
+        _advance_api_key()
+        _reset_llm()
     raise last_exc
 
 
@@ -140,9 +159,13 @@ Output must start with curly brace and end with curly brace like json.
 ."""
 
     try:
+        print("[ComplaintTools] Running generate_resolution_email")
+        print(f"[ComplaintTools] Prompt length: {len(prompt)}")
         r = _invoke_with_fallback(prompt)
         content = r.content if hasattr(r, "content") else str(r)
+        print(f"[ComplaintTools] Raw response length: {len(str(content))}")
         out = extract_json_from_response(str(content))
+        print(f"[ComplaintTools] Parsed email output: {out}")
         subj = out.get("subject", f"Issue Resolution for {name}")
         body = out.get("body", f"Dear {name},\n\nWe have resolved your complaint regarding: {complaint_description}.\n\nThank you for bringing this to our attention.\n\nBest regards,\nThe Retain AI Team")
     except Exception as e:

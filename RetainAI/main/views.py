@@ -16,7 +16,11 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from main.agents.compliant_agent import run_agent as run_complaint_agent
-from main.agents.complaint_tools import tools as complaint_tools
+from main.agents.complaint_tools import (
+    tools as complaint_tools,
+    generate_resolution_email,
+    send_resolution_email,
+)
 from main.agents.tools import (
     decide_strategy,
     extract_guest_filters,
@@ -234,18 +238,14 @@ def _complaint_event_stream(name: str, email: str, complaint: str) -> Iterator[s
 
     try:
         yield _sse_emit({"type": "log", "message": "📧 Generating resolution email..."})
-        email_data = complaint_tool_dict["generate_resolution_email"].invoke({
-            "name": name,
-            "email": email,
-            "complaint_description": complaint
-        })
+        email_data = generate_resolution_email(name, email, complaint)
         yield _sse_emit(
             {"type": "log", "message": f"✅ Email generated for {name}", "data": {"email": _json_safe_value(email_data)}}
         )
         yield _sse_emit({"type": "email_preview", "email": _json_safe_value(email_data)})
 
         yield _sse_emit({"type": "log", "message": "📤 Sending resolution email (demo)..."})
-        send_result = complaint_tool_dict["send_resolution_email"].invoke({"email_dict": email_data})
+        send_result = send_resolution_email(email_data)
         yield _sse_emit(
             {"type": "log", "message": f"✅ Email sent to {email}", "data": _json_safe_value(send_result)}
         )
